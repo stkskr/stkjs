@@ -4,7 +4,12 @@
       "Bash(npm run dev:*)",
       "Bash(ls:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Portfolio website for Sticks & Stones Seoul\n\n- Component-based vanilla JavaScript architecture\n- Responsive design with mobile-first approach\n- Client logo marquee with infinite scroll\n- Space gallery with grid/marquee layouts\n- FAQ system with category filtering and accordion\n- Dynamic language switching \\(Korean/English\\)\n- Interactive portfolio grid and modal views\n- Quote carousel with smooth transitions\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)"
     ]
   }
 }
