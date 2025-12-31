@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Interactive Grid</title>
+    <style>
+        body { 
+            margin: 0; 
+            background: #ffffff; 
+            font-family: system-ui, -apple-system, sans-serif; 
+        }
+
+        .container { 
+            position: relative; 
+            width: 100vw; 
+            height: 100vh; 
+            overflow: hidden; 
+            background: #ffffff;
+        }
+
+        /* --- Decorative Center Circle --- */
+        .center-circle {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            width: 200px; 
+            height: 200px;
+            background: #a11d20;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            z-index: 150;
+            transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .stateExpanding .center-circle { 
+            transform: translate(-50%, -50%) scale(0); 
+        }
+
+        /* --- Circular Close Button --- */
+        .close-button {
+            position: absolute;
+            top: 30px; 
+            right: 30px;
+            width: 44px; 
+            height: 44px;
+            background: #888;
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            z-index: 200;
+            opacity: 0; 
+            pointer-events: none;
+            transition: all 400ms ease;
+        }
+        .close-icon { 
+            color: #ffffff; 
+            font-size: 32px; 
+            line-height: 1; 
+            margin-top: -4px; 
+            user-select: none;
+        }
+        .stateExpanding .close-button { 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        /* --- Quadrant & Sub-Box Base --- */
+        .quadrant, .sub-quadrant {
+            position: absolute;
+            width: 50%; 
+            height: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 24px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translate3d(0,0,0);
+            backface-visibility: hidden;
+            box-sizing: border-box; /* Ensures padding doesn't affect 50% height */
+        }
+
+        /* Colors: #fafafa for Menu Whites, #fff for Content Whites */
+        .about, .clients, .white-sub { background: #fafafa; color: black; }
+        .services, .portfolio, .blue-sub { background: #001f3f; color: #ffffff; }
+
+        /* Initial Grid Positions */
+        .about     { top: 0;   left: 0; }
+        .services  { top: 0;   left: 50%; }
+        .portfolio { top: 50%; left: 0; }
+        .clients   { top: 50%; left: 50%; }
+
+        /* Sub-Header Boxes */
+        .sub-quadrant { 
+            left: 100%; 
+            top: 0; 
+            z-index: 5; 
+            font-size: 11px; 
+            padding: 40px; 
+            text-align: center; 
+        }
+
+        /* --- Content Area --- */
+        .content-box {
+            position: absolute;
+            left: 0; 
+            width: 100%; 
+            height: 51%; /* Slightly taller to prevent gaps */
+            background: #ffffff; 
+            color: #333;
+            overflow-y: auto;
+            transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            top: 100%; 
+        }
+
+        .content-inner { 
+            padding: 80px 20%; /* Massive horizontal margins */
+            opacity: 0; 
+            transition: opacity 300ms ease; 
+        }
+        .content-inner h1 { font-size: 3.5rem; margin-bottom: 2rem; }
+        .content-inner p { line-height: 1.8; font-size: 1.3rem; }
+
+        /* Expanded States */
+        .stateExpanding .content-box { 
+            top: 50%; 
+            margin-top: -1px; /* Overlaps quadrants by 1px to seal the seam */
+        }
+        .stateExpanding .content-inner { 
+            opacity: 1; 
+            transition-delay: 400ms; 
+        }
+
+        /* Vanish Logic */
+        .stateExpanding .about:not(.selected)     { width: 0; height: 0; top: 0;    left: 0;    }
+        .stateExpanding .services:not(.selected)  { width: 0; height: 0; top: 0;    left: 100%; }
+        .stateExpanding .portfolio:not(.selected) { width: 0; height: 0; top: 100%; left: 0;    }
+        .stateExpanding .clients:not(.selected)   { width: 0; height: 0; top: 100%; left: 100%; }
+
+        /* Selected Main Hero Position */
+        .quadrant.selected {
+            width: 50% !important; 
+            height: 50% !important;
+            top: 0 !important; 
+            left: 0 !important;
+            z-index: 100 !important;
+            cursor: default;
+        }
+
+        /* Sub Position Logic - Forced Symmetry */
+        .aboutSelected .blue-sub, 
+        .clientsSelected .blue-sub,
+        .servicesSelected .white-sub, 
+        .portfolioSelected .white-sub {
+            left: 50% !important; 
+            top: 0 !important; 
+            width: 50% !important; 
+            height: 50% !important;
+            display: flex !important;
+            z-index: 50 !important;
+        }
+
+        /* Portfolio Specific Grid */
+        .portfolio-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px; 
+            margin-top: 40px; 
+        }
+        .portfolio-item { 
+            aspect-ratio: 1 / 1; 
+            background: #f4f4f4; 
+            border: 1px solid #eee; 
+        }
+
+        .quadrant { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="app" class="container">
+    <div id="mid-circle" class="center-circle"></div>
+
+    <div id="close-btn" class="close-button">
+        <span class="close-icon">&times;</span>
+    </div>
+
+    <div class="quadrant about">about</div>
+    <div class="quadrant services">services</div>
+    <div class="quadrant portfolio">portfolio</div>
+    <div class="quadrant clients">clients</div>
+
+    <div class="sub-quadrant blue-sub"><span id="sub-text-blue"></span></div>
+    <div class="sub-quadrant white-sub"><span id="sub-text-white"></span></div>
+
+    <div id="content" class="content-box">
+        <div id="content-target" class="content-inner"></div>
+    </div>
+
+    <div id="templates" style="display: none;">
+        <div id="temp-about" data-sub="Subtitle for About">
+            <h1>About Us</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="temp-services" data-sub="Subtitle for Services">
+            <h1>Our Services</h1>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div id="temp-portfolio" data-sub="Subtitle for Portfolio">
+            <h1>Portfolio</h1>
+            <div class="portfolio-grid">
+                <div class="portfolio-item"></div><div class="portfolio-item"></div><div class="portfolio-item"></div>
+                <div class="portfolio-item"></div><div class="portfolio-item"></div><div class="portfolio-item"></div>
+            </div>
+        </div>
+        <div id="temp-clients" data-sub="Subtitle for Clients">
+            <h1>Clients</h1>
+            <p>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const app = document.getElementById('app');
+    const quadrants = document.querySelectorAll('.quadrant');
+    const closeBtn = document.getElementById('close-btn');
+    const contentTarget = document.getElementById('content-target');
+    const subTextBlue = document.getElementById('sub-text-blue');
+    const subTextWhite = document.getElementById('sub-text-white');
+
+    const resetGrid = () => {
+        app.className = 'container';
+        quadrants.forEach(quad => quad.classList.remove('selected'));
+    };
+
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetGrid();
+    });
+
+    quadrants.forEach(q => {
+        q.addEventListener('click', () => {
+            if (app.classList.contains('stateExpanding')) return;
+
+            const name = q.classList[1]; 
+            const template = document.getElementById(`temp-${name}`);
+            const subHeaderContent = template.getAttribute('data-sub');
+            
+            contentTarget.innerHTML = template.innerHTML;
+            subTextBlue.innerText = subHeaderContent;
+            subTextWhite.innerText = subHeaderContent;
+            
+            q.classList.add('selected');
+            app.className = `container stateExpanding ${name}Selected`;
+        });
+    });
+</script>
+
+</body>
+</html>

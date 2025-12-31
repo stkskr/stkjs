@@ -1,0 +1,80 @@
+{
+  "lg-2023-new-years-message": {
+    "thumbnail": "/assets/portfolio/thumbnails/01_lg-2023-new-years-message.jpg",
+    "slider": [
+      "/assets/portfolio/slider/01_lg-2023-new-years-message.jpg"
+    ]
+  },
+  "ces-2022-hyundai-keynote": {
+    "thumbnail": "/assets/portfolio/thumbnails/02_ces-2022-hyundai-keynote.jpg",
+    "slider": []
+  },
+  "990-pro-online-features": {
+    "thumbnail": "/assets/portfolio/thumbnails/03_990-pro-online-features.jpg",
+    "slider": []
+  },
+  "team-naver-dan-23": {
+    "thumbnail": "/assets/portfolio/thumbnails/04_team-naver-dan-23.jpg",
+    "slider": []
+  },
+  "lg-antimicrobial-glass": {
+    "thumbnail": "/assets/portfolio/thumbnails/05_lg-antimicrobial-glass.jpg",
+    "slider": []
+  },
+  "lifes-good-award-2023": {
+    "thumbnail": "/assets/portfolio/thumbnails/06_lifes-good-award-2023.jpg",
+    "slider": []
+  },
+  "samsung-sdc-ces-2025": {
+    "thumbnail": "/assets/portfolio/thumbnails/07_samsung-sdc-ces-2025.jpg",
+    "slider": []
+  },
+  "lg-ces-2025": {
+    "thumbnail": "/assets/portfolio/thumbnails/08_lg-ces-2025.jpg",
+    "slider": []
+  },
+  "amorepacific-80th-anniversary": {
+    "thumbnail": "/assets/portfolio/thumbnails/09_amorepacific-80th-anniversary.jpg",
+    "slider": []
+  },
+  "amorepacific-vision-statement": {
+    "thumbnail": "/assets/portfolio/thumbnails/10_amorepacific-vision-statement.jpg",
+    "slider": []
+  },
+  "lg-brand-guidelines": {
+    "thumbnail": "/assets/portfolio/thumbnails/11_lg-brand-guidelines.jpg",
+    "slider": []
+  },
+  "seventeen-album": {
+    "thumbnail": "/assets/portfolio/thumbnails/12_seventeen-album.jpg",
+    "slider": [
+      "/assets/portfolio/slider/12_seventeen-album_01.jpg",
+      "/assets/portfolio/slider/12_seventeen-album_02.jpg"
+    ]
+  },
+  "genesis-gv80-black": {
+    "thumbnail": "/assets/portfolio/thumbnails/13_genesis-gv80-black.jpg",
+    "slider": []
+  },
+  "innisfree-brand-slogan": {
+    "thumbnail": "/assets/portfolio/thumbnails/14_innisfree-brand-slogan.jpg",
+    "slider": [
+      "/assets/portfolio/slider/14_innisfree-brand-slogan_01.jpg",
+      "/assets/portfolio/slider/14_innisfree-brand-slogan_02.jpg",
+      "/assets/portfolio/slider/14_innisfree-brand-slogan_03.jpg"
+    ]
+  },
+  "hankook-tire-warranty": {
+    "thumbnail": "/assets/portfolio/thumbnails/15_hankook-tire-warranty.jpg",
+    "slider": [
+      "/assets/portfolio/slider/15_hankook-tire-warranty.jpg"
+    ]
+  },
+  "lg-styler-of": {
+    "thumbnail": "/assets/portfolio/thumbnails/16_lg-styler-of.jpg",
+    "slider": [
+      "/assets/portfolio/slider/16_lg-styler-of_01.jpg",
+      "/assets/portfolio/slider/16_lg-styler-of_02.jpg"
+    ]
+  }
+}

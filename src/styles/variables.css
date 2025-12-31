@@ -1,0 +1,29 @@
+:root {
+  /* Colors */
+  --color-menu-white: #fafafa;
+  --color-content-white: #ffffff;
+  --color-navy: #19334a;
+  --color-red: #a11d20;
+  --color-gray: #888;
+  --color-light-gray: #f4f4f4;
+  --color-border-gray: #eee;
+  --color-text-dark: #333;
+
+  /* Timing Functions */
+  --timing-main: cubic-bezier(0.4, 0, 0.2, 1);
+  --timing-ease: ease;
+
+  /* Durations */
+  --duration-main: 600ms;
+  --duration-close: 400ms;
+  --duration-fade: 300ms;
+  --duration-fade-delay: 400ms;
+
+  /* Z-index layers */
+  --z-quadrant-base: 1;
+  --z-sub-quadrant: 5;
+  --z-content: 10;
+  --z-selected: 100;
+  --z-circle: 150;
+  --z-close: 200;
+}

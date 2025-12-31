@@ -1,0 +1,15 @@
+{
+  "name": "stksjs",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run generate:manifest && vite",
+    "build": "npm run generate:manifest && vite build",
+    "preview": "vite preview",
+    "generate:manifest": "node scripts/generate-image-manifest.js"
+  },
+  "devDependencies": {
+    "vite": "^5.0.8",
+    "vite-plugin-imagemin": "^0.6.1"
+  }
+}
