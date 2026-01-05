@@ -77,11 +77,28 @@ class Router {
 
   handleRoute() {
     const route = this.parseRoute(window.location.pathname);
+    const currentState = stateManager.getState();
+
+    // Check if we're just changing language (same section, different language)
+    const isLanguageChangeOnly =
+      currentState.currentSection === route.section &&
+      currentState.language !== route.language &&
+      !this.isInitialLoad;
 
     // On initial load with a section, skip animation by using 'expanded' state
-    const appState = route.section
-      ? (this.isInitialLoad ? 'expanded' : 'expanding')
-      : 'idle';
+    // On language change only, use 'expanded' to avoid re-triggering animations/audio
+    let appState;
+    if (route.section) {
+      if (this.isInitialLoad) {
+        appState = 'expanded';
+      } else if (isLanguageChangeOnly) {
+        appState = 'expanded'; // Use expanded state to prevent audio replay
+      } else {
+        appState = 'expanding';
+      }
+    } else {
+      appState = 'idle';
+    }
 
     stateManager.setState({
       currentSection: route.section,

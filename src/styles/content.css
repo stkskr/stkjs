@@ -25,7 +25,7 @@
 
 .content-inner p {
   line-height: 1.8;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   margin-bottom: 1rem;
 }
 
@@ -107,6 +107,7 @@
   cursor: pointer;
   text-transform: none;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .company-download-btn:hover {
@@ -231,10 +232,58 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   color: var(--color-navy);
 }
 
+/* Audio Toggle */
+.audio-toggle {
+  position: fixed;
+  top: 24px;
+  right: 30px;
+  z-index: var(--z-close);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border-radius: 50%;
+  user-select: none;
+  cursor: pointer;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all var(--duration-close) var(--timing-ease);
+  border: none;
+}
+
+.audio-toggle:hover {
+  background: rgba(136, 136, 136, 0.3);
+}
+
+.audio-icon {
+  width: 18px;
+  height: 18px;
+  color: white;
+  transition: color 200ms ease;
+}
+
+/* Hide audio toggle when a section is selected */
+.stateExpanding .audio-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.audio-toggle:active {
+  transform: scale(0.95);
+  transition: transform 100ms ease;
+}
+
 /* Services Container */
 .services-container {
   width: 100%;
   margin-top: 20px;
+}
+
+/* Services Section - Smaller side margins for larger images */
+.servicesSelected .content-inner {
+  padding: 40px 8% 0;
 }
 
 /* Services Grid - Responsive columns */
@@ -274,6 +323,11 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   height: auto;
   display: block;
   object-fit: contain;
+}
+
+/* Portfolio Section - Slightly smaller side margins for better use of space */
+.portfolioSelected .content-inner {
+  padding: 40px 15% 0;
 }
 
 /* Portfolio Container */
@@ -322,7 +376,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 18px;
 }
 
 /* 2 columns for medium screens */
@@ -981,7 +1035,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   padding-top: 30px;
 }
 
-/* Triangle connector */
+/* Triangle connector - extra pixel to prevent gap */
 .quote-box-dark::after {
   content: '';
   position: absolute;
@@ -990,9 +1044,9 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   transform: translateY(-50%);
   width: 0;
   height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 20px solid #3b3b3b;
+  border-top: 21px solid transparent;
+  border-bottom: 21px solid transparent;
+  border-left: 21px solid #3b3b3b;
   z-index: 2;
 }
 
@@ -1028,12 +1082,58 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .quote-text {
-    font-size: 1rem;
-    padding-top: 20px;
+  /* Keep carousel within content area on mobile */
+  .quote-carousel-container {
+    width: 95%;
+    margin: 30px auto;
+  }
+
+  /* Stack vertically on mobile */
+  .quote-slide {
+    flex-direction: column;
   }
 
   .quote-box-dark,
+  .author-box-light {
+    flex: 1;
+    width: 100%;
+  }
+
+  /* Hide horizontal triangle on mobile */
+  .quote-box-dark::after {
+    display: none;
+  }
+
+  /* Add vertical triangle pointing down */
+  .quote-box-dark::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 21px solid transparent;
+    border-right: 21px solid transparent;
+    border-top: 21px solid #3b3b3b;
+    z-index: 2;
+  }
+
+  /* Remove left border, add top border for author box */
+  .author-box-light {
+    border-left: 1px solid #eee;
+    border-top: none;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+    padding-top: 30px;
+  }
+
+  .quote-box-dark {
+    padding: 30px 25px 25px 25px;
+  }
+
   .author-box-light {
     padding: 25px;
   }
@@ -1441,5 +1541,129 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
   .member-info .role {
     font-size: 0.85rem;
+  }
+}
+
+/* ===================================
+   Testimonials Grid
+   =================================== */
+
+.testimonials-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 120px auto;
+  padding: 0 40px;
+}
+
+.testimonials-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 40px 30px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: default;
+}
+
+.testimonial-card:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.015);
+}
+
+.testimonial-card:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.testimonial-card:hover {
+  transform: translateX(8px);
+}
+
+.testimonial-laurel {
+  width: 36px;
+  height: 36px;
+  color: #ccc;
+  flex-shrink: 0;
+  transition: color 0.4s ease;
+  margin-top: 4px;
+}
+
+.testimonial-card:hover .testimonial-laurel {
+  color: #1a1a1a;
+}
+
+.testimonial-laurel svg {
+  width: 100%;
+  height: 100%;
+}
+
+.testimonial-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.testimonial-quote {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.testimonial-author {
+  font-size: 0.9rem!important;
+  color: #888;
+  margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 1024px) {
+  .testimonials-section {
+    max-width: 800px;
+    padding: 0 35px;
+  }
+}
+
+@media (max-width: 900px) {
+  .testimonials-section {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 0;
+    margin: 60px 0;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  .testimonial-card {
+    gap: 20px;
+    padding: 28px 20px;
+  }
+
+  .testimonial-card:hover {
+    transform: translateX(4px);
+  }
+
+  .testimonial-laurel {
+    width: 30px;
+    height: 30px;
+  }
+
+  .testimonial-quote {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0 0 10px 0;
+  }
+
+  .testimonial-author {
+    font-size: 0.7rem;
   }
 }

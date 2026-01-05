@@ -11,6 +11,7 @@ import { stateManager } from './core/state.js';
 import { GridQuadrant } from './components/GridQuadrant.js';
 import { Content } from './components/Content.js';
 import { LanguageToggle } from './components/LanguageToggle.js';
+import { AudioToggle } from './components/AudioToggle.js';
 import { CloseButton } from './components/CloseButton.js';
 import { BottomTabs } from './components/BottomTabs.js';
 
@@ -19,6 +20,7 @@ class App {
     this.quadrantGrid = new GridQuadrant('app');
     this.contentArea = new Content();
     this.languageToggle = new LanguageToggle();
+    this.audioToggle = new AudioToggle();
     this.closeButton = new CloseButton();
     this.bottomTabs = new BottomTabs();
 
@@ -31,6 +33,7 @@ class App {
     this.contentArea.mount(appContainer);
     this.closeButton.mount(appContainer);
     this.languageToggle.mount(document.body);
+    this.audioToggle.mount(document.body);
     this.bottomTabs.mount(document.body);
   }
 

@@ -4,6 +4,7 @@ import { siteContent } from '../data/content.js';
 import { languageManager } from '../core/language.js';
 import { createElement, setHTML } from '../utils/dom.js';
 import { ModalVideo } from './ModalVideo.js';
+import { audioManager } from '../utils/audio.js';
 
 export class GridQuadrant {
   constructor(containerId) {
@@ -69,6 +70,7 @@ export class GridQuadrant {
     logoGif.alt = 'STKS Logo';
 
     centerCircle.appendChild(logoGif);
+    this.centerCircle = centerCircle;
 
     centerCircle.addEventListener('click', () => {
       const { currentSection } = stateManager.getState();
@@ -135,6 +137,24 @@ export class GridQuadrant {
       document.body.classList.add('stateExpanding');
       document.body.classList.add(`${currentSection}Selected`);
 
+      // Play audio for the section (only when expanding, not when already expanded)
+      if (appState === 'expanding') {
+        audioManager.play(currentSection);
+      }
+
+      // Move circle to opposite corner based on selected quadrant
+      const oppositeCorners = {
+        about: { top: '100%', left: '100%' },      // bottom-right
+        services: { top: '100%', left: '0%' },     // bottom-left
+        portfolio: { top: '0%', left: '100%' },    // top-right
+        clients: { top: '0%', left: '0%' }         // top-left
+      };
+
+      if (oppositeCorners[currentSection]) {
+        this.centerCircle.style.top = oppositeCorners[currentSection].top;
+        this.centerCircle.style.left = oppositeCorners[currentSection].left;
+      }
+
       // Force reflow for Safari to recognize overflow-y: auto immediately
       void this.container.offsetHeight;
 
@@ -152,6 +172,13 @@ export class GridQuadrant {
       // Reset overflow and scroll position when returning to homepage
       this.container.style.overflowY = '';
       this.container.scrollTop = 0;
+
+      // Stop audio when returning to home
+      audioManager.stop();
+
+      // Reset circle to center
+      this.centerCircle.style.top = '50%';
+      this.centerCircle.style.left = '50%';
     }
 
     const sections = ['about', 'services', 'portfolio', 'clients'];

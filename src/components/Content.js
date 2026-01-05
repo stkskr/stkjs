@@ -8,6 +8,7 @@ import { QuoteCarousel } from './QuoteCarousel.js';
 import { TeamProfiles } from './TeamProfiles.js';
 import { ClientMarquee } from './ClientMarquee.js';
 import { SpaceGallery } from './SpaceGallery.js';
+import { TestimonialsGrid } from './TestimonialsGrid.js';
 
 export class Content {
   constructor() {
@@ -21,6 +22,7 @@ export class Content {
     this.teamProfiles = new TeamProfiles();
     this.clientMarquee = new ClientMarquee();
     this.spaceGallery = new SpaceGallery();
+    this.testimonialsGrid = new TestimonialsGrid();
   }
 
   render(state) {
@@ -150,19 +152,16 @@ export class Content {
   }
 
   renderClients(language) {
-    const content = siteContent.clients;
-    const body = languageManager.getContent(content.body, language);
-
-    this.innerElement.innerHTML = `
-      <div class="standard-content">
-        <p>${body}</p>
-      </div>
-    `;
+    this.innerElement.innerHTML = '';
 
     // Add quote carousel
     this.quoteCarousel.mount(this.innerElement);
 
-    // Add CTA after carousel
+    // Add testimonials grid
+    this.testimonialsGrid.render(language);
+    this.testimonialsGrid.mount(this.innerElement);
+
+    // Add CTA after testimonials
     const ctaDiv = createElement('div');
     ctaDiv.innerHTML = this.renderCallToAction(language);
     this.innerElement.appendChild(ctaDiv);
