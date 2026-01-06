@@ -71,8 +71,9 @@ export class Content {
 
         <a href="/assets/company-profile.pdf" download class="company-download-btn">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 13L6 9H8V3H12V9H14L10 13Z" fill="currentColor"/>
-            <path d="M17 15V17H3V15H1V17C1 18.1 1.9 19 3 19H17C18.1 19 19 18.1 19 17V15H17Z" fill="currentColor"/>
+            <path class="download-arrow" d="M10 3V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path class="download-arrow" d="M6 10L10 14L14 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="download-tray" d="M3 17H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
           <span>${language === 'ko' ? '회사소개서 Download' : 'Download Company Profile'}</span>
         </a>

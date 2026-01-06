@@ -91,7 +91,7 @@ export class TeamProfiles {
 
         // If the bottom of the popup is below the viewport edge
         if (rect.bottom > viewportHeight && rect.height > 0) {
-          const extraSpace = 20; // Small buffer
+          const extraSpace = 100; // Small buffer
           const scrollDistance = rect.bottom - viewportHeight + extraSpace;
 
           console.log('✅ Scrolling by:', scrollDistance);

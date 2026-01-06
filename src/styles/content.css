@@ -15,7 +15,6 @@
   position: absolute;
   top: 50vh;
   left: 0;
-  padding-bottom: 100px;
 }
 
 .content-inner h1 {
@@ -48,16 +47,16 @@
 }
 
 .about-title {
-  font-size: 2.5rem;
+  font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 20px;
   color: var(--color-text-dark);
 }
 
 .about-subtitle {
-  font-size: 1.5rem;
+  font-size: 1.5rem!important;
   line-height: 1.6;
-  margin-bottom: 70px;
+  margin-bottom: 35px!important;
   color: var(--color-text-dark);
 }
 
@@ -87,7 +86,7 @@
 
   /* Reduce padding on mobile */
   .content-inner {
-    padding: 40px 10%;
+    padding: 40px 5% 0px 5%!important;
   }
 }
 
@@ -117,6 +116,34 @@
 .company-download-btn svg {
   width: 16px;
   height: 16px;
+}
+
+.company-download-btn .download-arrow {
+  transition: transform 300ms ease;
+  transform-origin: center;
+}
+
+/* Cute bouncing download animation on hover - only arrow moves */
+.company-download-btn:hover .download-arrow {
+  animation: download-bounce 600ms ease-in-out;
+}
+
+@keyframes download-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-4px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+  80% {
+    transform: translateY(0);
+  }
 }
 
 /* Call to Action Section */
@@ -283,7 +310,20 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
 /* Services Section - Smaller side margins for larger images */
 .servicesSelected .content-inner {
-  padding: 40px 8% 0;
+  padding: 40px 20% 0;
+}
+
+/* Reduce services margins earlier for narrower viewports */
+@media (max-width: 1200px) {
+  .servicesSelected .content-inner {
+    padding: 40px 12% 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .servicesSelected .content-inner {
+    padding: 40px 8% 0;
+  }
 }
 
 /* Services Grid - Responsive columns */
@@ -327,7 +367,26 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
 /* Portfolio Section - Slightly smaller side margins for better use of space */
 .portfolioSelected .content-inner {
-  padding: 40px 15% 0;
+  padding: 40px 25% 0;
+}
+
+/* Reduce portfolio margins earlier for narrower viewports */
+@media (max-width: 1400px) {
+  .portfolioSelected .content-inner {
+    padding: 40px 18% 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .portfolioSelected .content-inner {
+    padding: 40px 12% 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolioSelected .content-inner {
+    padding: 40px 8% 0;
+  }
 }
 
 /* Portfolio Container */
@@ -712,6 +771,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 .modal-carousel-item img {
   max-width: 100%;
   max-height: 550px;
+  min-height: 550px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -839,6 +899,14 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
 .modal-carousel-indicator.active {
   background: white;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  margin: 30px 0 40px 0;
+  line-height: 1.3;
 }
 
 .modal-info {
@@ -1032,7 +1100,9 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   position: relative;
   width: 100%;
   text-align: left;
-  padding-top: 30px;
+  padding-top: 35px;
+  padding-left:15px;
+  padding-right:15px;
 }
 
 /* Triangle connector - extra pixel to prevent gap */
@@ -1128,14 +1198,17 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   .quote-text {
     font-size: 1rem;
     padding-top: 30px;
+    text-align: center;
   }
 
   .quote-box-dark {
-    padding: 30px 25px 25px 25px;
+    padding: 35px 45px 30px 45px;
   }
 
   .author-box-light {
-    padding: 25px;
+    padding: 45px 25px 20px 25px;
+    align-items: center;
+    text-align: center;
   }
 
   .quote-icon {

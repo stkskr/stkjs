@@ -11,23 +11,41 @@
   },
   "990-pro-online-features": {
     "thumbnail": "/assets/portfolio/thumbnails/03_990-pro-online-features.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/03_990-pro-online-features_01.png",
+      "/assets/portfolio/slider/03_990-pro-online-features_02.png",
+      "/assets/portfolio/slider/03_990-pro-online-features_03.png",
+      "/assets/portfolio/slider/03_990-pro-online-features_04.png"
+    ]
   },
   "team-naver-dan-23": {
     "thumbnail": "/assets/portfolio/thumbnails/04_team-naver-dan-23.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/04_team-naver-dan-23_01.jpg",
+      "/assets/portfolio/slider/04_team-naver-dan-23_02.jpg"
+    ]
   },
   "lg-antimicrobial-glass": {
     "thumbnail": "/assets/portfolio/thumbnails/05_lg-antimicrobial-glass.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/05_lg-antimicrobial-glass_01.jpeg",
+      "/assets/portfolio/slider/05_lg-antimicrobial-glass_02.jpeg"
+    ]
   },
   "lifes-good-award-2023": {
     "thumbnail": "/assets/portfolio/thumbnails/06_lifes-good-award-2023.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/06_lifes-good-award-2023.jpg"
+    ]
   },
   "samsung-sdc-ces-2025": {
     "thumbnail": "/assets/portfolio/thumbnails/07_samsung-sdc-ces-2025.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/07_samsung-sdc-ces-2025_01.png",
+      "/assets/portfolio/slider/07_samsung-sdc-ces-2025_02.png",
+      "/assets/portfolio/slider/07_samsung-sdc-ces-2025_03.png",
+      "/assets/portfolio/slider/07_samsung-sdc-ces-2025_04.png"
+    ]
   },
   "lg-ces-2025": {
     "thumbnail": "/assets/portfolio/thumbnails/08_lg-ces-2025.jpg",
@@ -39,11 +57,18 @@
   },
   "amorepacific-vision-statement": {
     "thumbnail": "/assets/portfolio/thumbnails/10_amorepacific-vision-statement.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/10_amorepacific-vision-statement_01.jpg",
+      "/assets/portfolio/slider/10_amorepacific-vision-statement_02.jpg"
+    ]
   },
   "lg-brand-guidelines": {
     "thumbnail": "/assets/portfolio/thumbnails/11_lg-brand-guidelines.jpg",
-    "slider": []
+    "slider": [
+      "/assets/portfolio/slider/11_lg-brand-guidelines_01.png",
+      "/assets/portfolio/slider/11_lg-brand-guidelines_02.png",
+      "/assets/portfolio/slider/11_lg-brand-guidelines_03.png"
+    ]
   },
   "seventeen-album": {
     "thumbnail": "/assets/portfolio/thumbnails/12_seventeen-album.jpg",
@@ -54,10 +79,17 @@
   },
   "genesis-gv80-black": {
     "thumbnail": "/assets/portfolio/thumbnails/13_genesis-gv80-black.jpg",
+    "slider": [
+      "/assets/portfolio/slider/13_genesis-gv80-black_01.jpg",
+      "/assets/portfolio/slider/13_genesis-gv80-black_02.jpg"
+    ]
+  },
+  "lg-uplus-ixi-o": {
+    "thumbnail": "/assets/portfolio/thumbnails/14_lg-uplus-ixi-o.jpg",
     "slider": []
   },
   "innisfree-brand-slogan": {
-    "thumbnail": "/assets/portfolio/thumbnails/14_innisfree-brand-slogan.jpg",
+    "thumbnail": "/assets/portfolio/thumbnails/15_innisfree-brand-slogan.jpg",
     "slider": [
       "/assets/portfolio/slider/14_innisfree-brand-slogan_01.jpg",
       "/assets/portfolio/slider/14_innisfree-brand-slogan_02.jpg",
@@ -65,16 +97,241 @@
     ]
   },
   "hankook-tire-warranty": {
-    "thumbnail": "/assets/portfolio/thumbnails/15_hankook-tire-warranty.jpg",
+    "thumbnail": "/assets/portfolio/thumbnails/16_hankook-tire-warranty.jpg",
     "slider": [
       "/assets/portfolio/slider/15_hankook-tire-warranty.jpg"
     ]
   },
   "lg-styler-of": {
-    "thumbnail": "/assets/portfolio/thumbnails/16_lg-styler-of.jpg",
+    "thumbnail": "/assets/portfolio/thumbnails/17_lg-styler-of.jpg",
     "slider": [
       "/assets/portfolio/slider/16_lg-styler-of_01.jpg",
       "/assets/portfolio/slider/16_lg-styler-of_02.jpg"
+    ]
+  },
+  "samsung-display-synchroma": {
+    "thumbnail": "/assets/portfolio/thumbnails/18_samsung-display-synchroma.jpg",
+    "slider": []
+  },
+  "olive-young-25th-anniversary": {
+    "thumbnail": "/assets/portfolio/thumbnails/19_olive-young-25th-anniversary.jpg",
+    "slider": []
+  },
+  "samsung-smartthings-lifestyle": {
+    "thumbnail": "/assets/portfolio/thumbnails/20_samsung-smartthings-lifestyle.jpg",
+    "slider": []
+  },
+  "hyundai-pleos-vision": {
+    "thumbnail": "/assets/portfolio/thumbnails/21_hyundai-pleos-vision.jpg",
+    "slider": []
+  },
+  "samyang-tangle-renewal": {
+    "thumbnail": "/assets/portfolio/thumbnails/22_samyang-tangle-renewal.jpg",
+    "slider": []
+  },
+  "odyssey-neo-g9": {
+    "thumbnail": "/assets/portfolio/thumbnails/23_odyssey-neo-g9.jpg",
+    "slider": []
+  },
+  "samsung-ea-rebranding": {
+    "thumbnail": "/assets/portfolio/thumbnails/24_samsung-ea-rebranding.jpg",
+    "slider": []
+  },
+  "lg-tone-of-voice": {
+    "thumbnail": "/assets/portfolio/thumbnails/25_lg-tone-of-voice.jpg",
+    "slider": [
+      "/assets/portfolio/slider/25_lg-tone-of-voice_01.png",
+      "/assets/portfolio/slider/25_lg-tone-of-voice_02.png",
+      "/assets/portfolio/slider/25_lg-tone-of-voice_03.png"
+    ]
+  },
+  "naver-website-renewal": {
+    "thumbnail": "/assets/portfolio/thumbnails/26_naver-website-renewal.jpg",
+    "slider": [
+      "/assets/portfolio/slider/26_naver-website-renewal_01.png",
+      "/assets/portfolio/slider/26_naver-website-renewal_02.png",
+      "/assets/portfolio/slider/26_naver-website-renewal_03.png"
+    ]
+  },
+  "lineage-w-slogan": {
+    "thumbnail": "/assets/portfolio/thumbnails/27_lineage-w-slogan.jpg",
+    "slider": [
+      "/assets/portfolio/slider/27_lineage-w-slogan.png"
+    ]
+  },
+  "lg-enblock-website": {
+    "thumbnail": "/assets/portfolio/thumbnails/28_lg-enblock-website.jpg",
+    "slider": [
+      "/assets/portfolio/slider/28_lg-enblock-website_01.jpg",
+      "/assets/portfolio/slider/28_lg-enblock-website_02.jpg",
+      "/assets/portfolio/slider/28_lg-enblock-website_03.jpg"
+    ]
+  },
+  "lg-brand-book": {
+    "thumbnail": "/assets/portfolio/thumbnails/29_lg-brand-book.jpg",
+    "slider": [
+      "/assets/portfolio/slider/29_lg-brand-book_01.jpg",
+      "/assets/portfolio/slider/29_lg-brand-book_02.jpg",
+      "/assets/portfolio/slider/29_lg-brand-book_03.jpg"
+    ]
+  },
+  "ahc-brand-manifesto": {
+    "thumbnail": "/assets/portfolio/thumbnails/30_ahc-brand-manifesto.jpg",
+    "slider": []
+  },
+  "aero-furniture-message-matrix": {
+    "thumbnail": "/assets/portfolio/thumbnails/31_aero-furniture-message-matrix.jpg",
+    "slider": [
+      "/assets/portfolio/slider/31_aero-furniture-message-matrix_01.jpg",
+      "/assets/portfolio/slider/31_aero-furniture-message-matrix_02.jpg",
+      "/assets/portfolio/slider/31_aero-furniture-message-matrix_03.jpg"
+    ]
+  },
+  "automotive-memory-features": {
+    "thumbnail": "/assets/portfolio/thumbnails/32_automotive-memory-features.jpg",
+    "slider": [
+      "/assets/portfolio/slider/32_automotive-memory-features.jpg"
+    ]
+  },
+  "hankook-weatherflex": {
+    "thumbnail": "/assets/portfolio/thumbnails/33_hankook-weatherflex.jpg",
+    "slider": [
+      "/assets/portfolio/slider/33_hankook-weatherflex_01.png",
+      "/assets/portfolio/slider/33_hankook-weatherflex_02.png",
+      "/assets/portfolio/slider/33_hankook-weatherflex_03.png"
+    ]
+  },
+  "samsung-display-bus-wrap": {
+    "thumbnail": "/assets/portfolio/thumbnails/34_samsung-display-bus-wrap.jpg",
+    "slider": [
+      "/assets/portfolio/slider/34_samsung-display-bus-wrap_01.jpg",
+      "/assets/portfolio/slider/34_samsung-display-bus-wrap_02.jpg"
+    ]
+  },
+  "samsung-oled-era": {
+    "thumbnail": "/assets/portfolio/thumbnails/35_samsung-oled-era.jpg",
+    "slider": [
+      "/assets/portfolio/slider/35_samsung-oled-era_01.png",
+      "/assets/portfolio/slider/35_samsung-oled-era_02.jpg",
+      "/assets/portfolio/slider/35_samsung-oled-era_03.png",
+      "/assets/portfolio/slider/35_samsung-oled-era_04.jpg",
+      "/assets/portfolio/slider/35_samsung-oled-era_05.jpg"
+    ]
+  },
+  "lg-newsletter-bite": {
+    "thumbnail": "/assets/portfolio/thumbnails/36_lg-newsletter-bite.jpg",
+    "slider": [
+      "/assets/portfolio/slider/36_lg-newsletter-bite.png"
+    ]
+  },
+  "fc-online-mourinho": {
+    "thumbnail": "/assets/portfolio/thumbnails/37_fc-online-mourinho.jpg",
+    "slider": []
+  },
+  "aestura-atobarrier": {
+    "thumbnail": "/assets/portfolio/thumbnails/38_aestura-atobarrier.jpg",
+    "slider": []
+  },
+  "melon-music-sns": {
+    "thumbnail": "/assets/portfolio/thumbnails/39_melon-music-sns.jpg",
+    "slider": [
+      "/assets/portfolio/slider/39_melon-music-sns.png"
+    ]
+  },
+  "huvitz-lens-edger": {
+    "thumbnail": "/assets/portfolio/thumbnails/40_huvitz-lens-edger.jpg",
+    "slider": [
+      "/assets/portfolio/slider/40_huvitz-lens-edger_01.jpg",
+      "/assets/portfolio/slider/40_huvitz-lens-edger_02.jpg"
+    ]
+  },
+  "musinsa-global-launch": {
+    "thumbnail": "/assets/portfolio/thumbnails/41_musinsa-global-launch.jpg",
+    "slider": [
+      "/assets/portfolio/slider/41_musinsa-global-launch.png"
+    ]
+  },
+  "hyundai-uam-tvc": {
+    "thumbnail": "/assets/portfolio/thumbnails/42_hyundai-uam-tvc.jpg",
+    "slider": []
+  },
+  "kakao-pay-intro": {
+    "thumbnail": "/assets/portfolio/thumbnails/43_kakao-pay-intro.jpg",
+    "slider": [
+      "/assets/portfolio/slider/43_kakao-pay-intro.jpg"
+    ]
+  },
+  "doosan-wheel-loader": {
+    "thumbnail": "/assets/portfolio/thumbnails/44_doosan-wheel-loader.jpg",
+    "slider": [
+      "/assets/portfolio/slider/44_doosan-wheel-loader_01.png",
+      "/assets/portfolio/slider/44_doosan-wheel-loader_02.png",
+      "/assets/portfolio/slider/44_doosan-wheel-loader_03.png"
+    ]
+  },
+  "sk-hynix-global-slogan": {
+    "thumbnail": "/assets/portfolio/thumbnails/45_sk-hynix-global-slogan.jpg",
+    "slider": []
+  },
+  "laneige-sleeping-mask": {
+    "thumbnail": "/assets/portfolio/thumbnails/46_laneige-sleeping-mask.jpg",
+    "slider": []
+  },
+  "kia-ev6-world-premiere": {
+    "thumbnail": "/assets/portfolio/thumbnails/47_kia-ev6-world-premiere.jpg",
+    "slider": []
+  },
+  "medit-brand-manual": {
+    "thumbnail": "/assets/portfolio/thumbnails/48_medit-brand-manual.jpg",
+    "slider": [
+      "/assets/portfolio/slider/48_medit-brand-manual.jpg"
+    ]
+  },
+  "kia-uefa-europa": {
+    "thumbnail": "/assets/portfolio/thumbnails/49_kia-uefa-europa.jpg",
+    "slider": []
+  },
+  "hyundai-duty-free": {
+    "thumbnail": "/assets/portfolio/thumbnails/50_hyundai-duty-free.jpg",
+    "slider": [
+      "/assets/portfolio/slider/50_hyundai-duty-free_01.png",
+      "/assets/portfolio/slider/50_hyundai-duty-free_02.png"
+    ]
+  },
+  "lg-signature-website": {
+    "thumbnail": "/assets/portfolio/thumbnails/51_lg-signature-website.jpg",
+    "slider": [
+      "/assets/portfolio/slider/51_lg-signature-website.jpg"
+    ]
+  },
+  "samsung-microsd": {
+    "thumbnail": "/assets/portfolio/thumbnails/52_samsung-microsd.jpg",
+    "slider": [
+      "/assets/portfolio/slider/52_samsung-microsd.jpg"
+    ]
+  },
+  "faceshop-cushion": {
+    "thumbnail": "/assets/portfolio/thumbnails/53_faceshop-cushion.jpg",
+    "slider": [
+      "/assets/portfolio/slider/53_faceshop-cushion.jpg"
+    ]
+  },
+  "hyundai-shackleton": {
+    "thumbnail": "/assets/portfolio/thumbnails/54_hyundai-shackleton.jpg",
+    "slider": []
+  },
+  "hanwha-corporate": {
+    "thumbnail": "/assets/portfolio/thumbnails/55_hanwha-corporate.jpg",
+    "slider": []
+  },
+  "doosan-corporate": {
+    "thumbnail": "/assets/portfolio/thumbnails/56_doosan-corporate.jpg",
+    "slider": []
+  },
+  "zic-global-slogan": {
+    "thumbnail": "/assets/portfolio/thumbnails/57_zic-global-slogan.jpg",
+    "slider": [
+      "/assets/portfolio/slider/57_zic-global-slogan.jpg"
     ]
   }
 }

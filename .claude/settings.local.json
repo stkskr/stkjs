@@ -10,7 +10,9 @@
       "Bash(git branch:*)",
       "Bash(git push:*)",
       "Bash(git config:*)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(npm run generate:manifest:*)",
+      "Bash(cd c:UsersbrixtDesktopWeb Toolsstksjs)"
     ]
   }
 }

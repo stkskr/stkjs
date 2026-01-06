@@ -11,5 +11,8 @@
   "devDependencies": {
     "vite": "^5.0.8",
     "vite-plugin-imagemin": "^0.6.1"
+  },
+  "overrides": {
+    "cross-spawn": "^7.0.3"
   }
 }

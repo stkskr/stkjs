@@ -85,13 +85,22 @@ class Router {
       currentState.language !== route.language &&
       !this.isInitialLoad;
 
+    // Check if we're just changing portfolio slug (same section, same language, different portfolio item)
+    const isPortfolioSlugChangeOnly =
+      currentState.currentSection === 'portfolio' &&
+      route.section === 'portfolio' &&
+      currentState.language === route.language &&
+      currentState.portfolioSlug !== route.portfolioSlug &&
+      !this.isInitialLoad;
+
     // On initial load with a section, skip animation by using 'expanded' state
     // On language change only, use 'expanded' to avoid re-triggering animations/audio
+    // On portfolio slug change only, use 'expanded' to avoid re-triggering audio
     let appState;
     if (route.section) {
       if (this.isInitialLoad) {
         appState = 'expanded';
-      } else if (isLanguageChangeOnly) {
+      } else if (isLanguageChangeOnly || isPortfolioSlugChangeOnly) {
         appState = 'expanded'; // Use expanded state to prevent audio replay
       } else {
         appState = 'expanding';

@@ -5,7 +5,6 @@ export const siteContent = {
   about: {
     subtitle: {
       ko: [
-            'カピライター',
             '문화적 맥락까지 전달하는',
             '브랜드 커뮤니케이터',
             'Sticks & Stones',
