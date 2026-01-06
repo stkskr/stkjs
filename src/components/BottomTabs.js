@@ -260,7 +260,7 @@ export class BottomTabs {
             <div class="contact-section">
               <p class="contact-tagline">${this.language === 'ko'
                 ? 'Words that stick, boosting brands. 글로벌 브랜딩과 마케팅에 특화된 영어 전문 카피라이팅 회사, 스틱스앤스톤스 서울.'
-                : 'Words that stick, boosting brands. A specialized English copywriting agency for global branding and marketing, Sticks & Stones Seoul.'
+                : 'Words that stick, boosting brands. <br> A specialized English copywriting agency for global branding and marketing, Sticks & Stones Seoul.'
               }</p>
             </div>
 
