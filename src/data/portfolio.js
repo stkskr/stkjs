@@ -443,9 +443,9 @@ export const portfolioData = [
       ko: 'Hyundai PLEOS Vision Film',
       en: 'Hyundai PLEOS Vision Film',
     },
-    client: 'Hyundai',
+    client: 'MDR Creative',
     mediaType: 'video',
-    videoUrl: 'https://youtu.be/E_DxpnmVDUc',
+    videoUrl: 'https://youtu.be/E_DxpnmVDUc?si=uJqxEY_83QShgPBy&t=199',
     mission: {
       ko: '자동차를 위한 운영체제, PLEOS의 비전을 공상과학 세계관을 통해 풀어내는 과제. OS라는 기술 중심 콘셉트를 관객이 쉽게 이해할 수 있도록 캐주얼하면서도 몰입감 있는 내레이션 스크립트로 구현 필요. 브랜드의 미래지향성과 서사적 상상력을 모두 담아낼 언어 설계 필요.',
       en: 'Transform a futuristic yet unfamiliar concept—an operating system for cars—into a vision that feels cinematic, imaginative, and accessible. Required crafting a narration script that balances sci-fi tone with down-to-earth clarity, expressing Hyundai\'s forward-looking narrative through immersive language.',

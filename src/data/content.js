@@ -17,7 +17,7 @@ export const siteContent = {
           ],
     },
     body: {
-      ko: 'Sticks & Stones\n인상적인 메시지를 쓰는 건 어렵습니다. 영어로는 더더욱',
+      ko: 'Sticks & Stones\n인상적인 메시지를 쓰는 건 어렵습니다.<br>영어로는 더더욱',
       en: 'Sticks & Stones\nWriting an impressive message for your local audience is difficult. <br> Even more so for a global one.',
     },
   },

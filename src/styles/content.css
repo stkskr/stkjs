@@ -55,7 +55,7 @@
 
 .about-subtitle {
   font-size: 1.5rem!important;
-  line-height: 1.6;
+  line-height: 43px!important;
   margin-bottom: 35px!important;
   color: var(--color-text-dark);
 }
@@ -148,13 +148,23 @@
 
 /* Call to Action Section */
 .cta-section {
-  margin-top: 100px;
   margin-bottom: 0;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
   text-align: center;
   padding: 80px 40px 120px;
   background: var(--color-menu-white);
+}
+
+/* Remove top margin on About page to connect with Our Space */
+.page-about .cta-section {
+  margin-top: 0;
+}
+
+/* Add bottom margin to Portfolio and Services content */
+.page-portfolio .content-box,
+.page-services .content-box {
+  margin-bottom: 100px;
 }
 
 .cta-heading {
@@ -306,6 +316,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 .services-container {
   width: 100%;
   margin-top: 20px;
+  margin-bottom:100px;
 }
 
 /* Services Section - Smaller side margins for larger images */
@@ -314,13 +325,13 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 }
 
 /* Reduce services margins earlier for narrower viewports */
-@media (max-width: 1200px) {
+@media (max-width: 1600px) {
   .servicesSelected .content-inner {
-    padding: 40px 12% 0;
+    padding: 40px 10% 0;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .servicesSelected .content-inner {
     padding: 40px 8% 0;
   }
@@ -436,6 +447,9 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
+  position: relative;
+  transition: opacity 0.2s ease;
+  margin-bottom:100px;
 }
 
 /* 2 columns for medium screens */
@@ -452,32 +466,37 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   }
 }
 
+/* Portfolio Item - Simple fade animation */
 .portfolio-item {
   aspect-ratio: 5 / 3;
-  background: var(--color-light-gray);
+  background: white;
   border: 1px solid var(--color-border-gray);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: hidden;
   opacity: 1;
-  transform: scale(1);
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* Initial enter state */
 .portfolio-item-enter {
   opacity: 0;
-  transform: scale(0.8) translateY(20px);
+  transform: translateY(-100%);
 }
 
-/* Exit animation */
-.portfolio-item-exit {
-  opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none;
-}
+/* Stagger cascade effect using nth-child delays */
+.portfolio-item-enter:nth-child(1) { transition-delay: 0ms; }
+.portfolio-item-enter:nth-child(2) { transition-delay: 30ms; }
+.portfolio-item-enter:nth-child(3) { transition-delay: 60ms; }
+.portfolio-item-enter:nth-child(4) { transition-delay: 90ms; }
+.portfolio-item-enter:nth-child(5) { transition-delay: 120ms; }
+.portfolio-item-enter:nth-child(6) { transition-delay: 150ms; }
+.portfolio-item-enter:nth-child(7) { transition-delay: 180ms; }
+.portfolio-item-enter:nth-child(8) { transition-delay: 210ms; }
+.portfolio-item-enter:nth-child(9) { transition-delay: 240ms; }
+.portfolio-item-enter:nth-child(10) { transition-delay: 270ms; }
+.portfolio-item-enter:nth-child(11) { transition-delay: 300ms; }
+.portfolio-item-enter:nth-child(12) { transition-delay: 330ms; }
 
 .portfolio-item:hover {
   transform: scale(1.02);
@@ -738,9 +757,23 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: none;
   width: 100%;
   height: 100%;
+  opacity: 0;
+  transform: translateX(0);
 }
 
-.modal-carousel-item.active,
+.modal-carousel-item.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .modal-carousel-item.exit-next,
 .modal-carousel-item.exit-prev,
 .modal-carousel-item.enter-next,
@@ -767,19 +800,19 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
 /* Carousel slide animations */
 .modal-carousel-item.enter-next {
-  animation: slideInFromRight 0.4s ease-out;
+  animation: slideInFromRight 0.4s ease-out forwards;
 }
 
 .modal-carousel-item.enter-prev {
-  animation: slideInFromLeft 0.4s ease-out;
+  animation: slideInFromLeft 0.4s ease-out forwards;
 }
 
 .modal-carousel-item.exit-next {
-  animation: slideOutToLeft 0.4s ease-out;
+  animation: slideOutToLeft 0.4s ease-out forwards;
 }
 
 .modal-carousel-item.exit-prev {
-  animation: slideOutToRight 0.4s ease-out;
+  animation: slideOutToRight 0.4s ease-out forwards;
 }
 
 @keyframes slideInFromRight {
@@ -1231,6 +1264,28 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   margin: 80px 0;
 }
 
+/* Smaller margins before breakout */
+@media (max-width: 1600px) {
+  .client-marquee-container {
+    margin: 60px 0;
+    padding: 50px 0;
+  }
+}
+
+/* Break out of content box at mid-range */
+@media (max-width: 1400px) {
+  .client-marquee-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
@@ -1277,6 +1332,18 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   margin: 80px 0 0 0;
 }
 
+/* Remove bottom margin on About page to connect to footer */
+.page-about .space-gallery-container {
+  margin-bottom: 0;
+}
+
+/* Smaller margins before breakout */
+@media (max-width: 1600px) {
+  .space-gallery-container {
+    margin: 60px 0 0 0;
+  }
+}
+
 /* Desktop: Grid layout */
 .space-grid {
   display: grid;
@@ -1284,7 +1351,26 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   grid-template-rows: repeat(2, 1fr);
   gap: 0;
   width: 100%;
-  max-height: 400px;
+  max-height: 550px;
+}
+
+/* Mid-range: Fullwidth 2-column grid - breaks out of container */
+@media (max-width: 1400px) {
+  .space-gallery-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 60px;
+  }
+
+  .space-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    max-height: 750px;
+  }
 }
 
 .space-item {
@@ -1312,7 +1398,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 .space-marquee-track {
   display: flex;
   width: max-content;
-  animation: space-marquee-scroll 30s linear infinite;
+  animation: space-marquee-scroll 50s linear infinite;
   will-change: transform;
 }
 
@@ -1343,8 +1429,8 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   }
 }
 
-/* Switch to marquee when grid can't fit 3 columns properly */
-@media (max-width: 900px) {
+/* Switch to marquee at earlier breakpoint */
+@media (max-width: 1200px) {
   .space-grid {
     display: none;
   }
@@ -1377,6 +1463,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   z-index: 1;
   opacity: 1;
   transition: opacity 0.3s ease;
+  flex-basis:25%;
 }
 
 .team-grid:has(.team-member:hover) .team-member:not(:hover) {

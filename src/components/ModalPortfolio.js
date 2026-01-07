@@ -4,7 +4,7 @@ import { createElement } from '../utils/dom.js';
 import { getFullImages } from '../utils/portfolio.js';
 import { stateManager } from '../core/state.js';
 import { router } from '../core/router.js';
-import { extractVideoId, getYoutubeThumbnail, getYoutubeThumbnailUrls, activateYoutubeFacade } from '../utils/youtube.js';
+import { extractVideoId, extractTimestamp, getYoutubeThumbnail, resolveYoutubeThumbnail, activateYoutubeFacade } from '../utils/youtube.js';
 
 export class ModalPortfolio {
   constructor() {
@@ -150,6 +150,12 @@ export class ModalPortfolio {
   }
 
   animateContentChange(modalBody, modalContent, item, language) {
+    // Stop any playing YouTube videos before changing content
+    const iframe = modalBody.querySelector('.youtube-facade iframe');
+    if (iframe) {
+      iframe.src = '';
+    }
+
     // Get current height
     const currentHeight = modalContent.offsetHeight;
 
@@ -196,6 +202,13 @@ export class ModalPortfolio {
   }
 
   close() {
+    // Stop any playing YouTube videos
+    const iframe = this.element.querySelector('.youtube-facade iframe');
+    if (iframe) {
+      // Remove the iframe src to stop playback
+      iframe.src = '';
+    }
+
     this.element.classList.remove('active');
     document.body.style.overflow = '';
     // Navigate back to portfolio page without slug
@@ -236,9 +249,10 @@ export class ModalPortfolio {
     if (item.videoUrl) {
       // Use YouTube facade for lazy loading
       const videoId = extractVideoId(item.videoUrl);
+      const timestamp = extractTimestamp(item.videoUrl);
       const thumbnailUrl = getYoutubeThumbnail(videoId);
       mediaContent = `
-        <div class="modal-video-container youtube-facade" data-video-id="${videoId}" data-video-title="${title}">
+        <div class="modal-video-container youtube-facade" data-video-id="${videoId}" data-video-timestamp="${timestamp || ''}" data-video-title="${title}">
           <img src="${thumbnailUrl}" alt="${title}" loading="eager" decoding="async" />
           <button class="youtube-play-btn" aria-label="Play video">
             <svg width="68" height="48" viewBox="0 0 68 48">
@@ -319,18 +333,36 @@ export class ModalPortfolio {
   }
 
   attachCarouselListeners() {
-    // Handle YouTube facade clicks
-    const youtubeFacade = this.element.querySelector('.youtube-facade');
-    if (youtubeFacade) {
+    // Handle YouTube facade clicks and thumbnail resolution
+    const youtubeFacades = this.element.querySelectorAll('.youtube-facade');
+    console.log('[ModalPortfolio] attachCarouselListeners called, facades:', youtubeFacades.length);
+
+    youtubeFacades.forEach((youtubeFacade, index) => {
+      const videoId = youtubeFacade.dataset.videoId;
+      const thumbnailImg = youtubeFacade.querySelector('img');
+
+      console.log(`[ModalPortfolio] facade ${index}`, { videoId, hasImg: !!thumbnailImg });
+
+      // Resolve the best available thumbnail quality
+      if (videoId && thumbnailImg) {
+        console.log('[ModalPortfolio] resolving thumbnail for', videoId);
+
+        resolveYoutubeThumbnail(videoId, (url, quality, w, h) => {
+          console.log('[ModalPortfolio] resolved thumbnail', { videoId, url, quality, w, h });
+          thumbnailImg.src = url;
+          youtubeFacade.dataset.thumbnailQuality = quality;
+        });
+      }
+
       const playBtn = youtubeFacade.querySelector('.youtube-play-btn');
       if (playBtn) {
         playBtn.addEventListener('click', () => {
-          const videoId = youtubeFacade.dataset.videoId;
+          const timestamp = youtubeFacade.dataset.videoTimestamp || null;
           const title = youtubeFacade.dataset.videoTitle;
-          activateYoutubeFacade(youtubeFacade, videoId, title);
+          activateYoutubeFacade(youtubeFacade, videoId, title, timestamp);
         });
       }
-    }
+    });
 
     const carouselContainer = this.element.querySelector('.modal-carousel-container');
     if (!carouselContainer) return;
@@ -344,28 +376,59 @@ export class ModalPortfolio {
 
     let currentIndex = 0;
 
-    const showSlide = (index) => {
-      const direction = index > currentIndex ? 'next' : 'prev';
+    const showSlide = (index, explicitDirection = null) => {
+      // Prevent sliding to the same index
+      if (index === currentIndex) return;
+
+      // Determine direction: use explicit if provided, otherwise calculate
+      let direction;
+      if (explicitDirection) {
+        direction = explicitDirection;
+      } else {
+        // Detect wrap-around cases
+        const isWrappingForward = currentIndex === items.length - 1 && index === 0;
+        const isWrappingBackward = currentIndex === 0 && index === items.length - 1;
+
+        if (isWrappingForward) {
+          direction = 'next';
+        } else if (isWrappingBackward) {
+          direction = 'prev';
+        } else {
+          direction = index > currentIndex ? 'next' : 'prev';
+        }
+      }
+
       const currentItem = items[currentIndex];
       const nextItem = items[index];
 
+      // Remove all animation classes from all items first
+      items.forEach((item) => {
+        item.classList.remove('exit-next', 'exit-prev', 'enter-next', 'enter-prev');
+      });
+
       // Add exit animation to current item
       if (currentItem) {
-        currentItem.classList.add(`exit-${direction}`);
         currentItem.classList.remove('active');
+        // Use requestAnimationFrame to ensure the class removal is processed
+        requestAnimationFrame(() => {
+          currentItem.classList.add(`exit-${direction}`);
+        });
       }
 
       // Add enter animation to next item
       if (nextItem) {
-        nextItem.classList.add(`enter-${direction}`, 'active');
+        nextItem.classList.add('active');
+        requestAnimationFrame(() => {
+          nextItem.classList.add(`enter-${direction}`);
+        });
       }
 
-      // Clean up animation classes after transition
+      // Clean up animation classes after transition completes
       setTimeout(() => {
         items.forEach((item) => {
           item.classList.remove('exit-next', 'exit-prev', 'enter-next', 'enter-prev');
         });
-      }, 400);
+      }, 450);
 
       indicators.forEach((indicator, i) => {
         indicator.classList.toggle('active', i === index);
@@ -375,12 +438,12 @@ export class ModalPortfolio {
 
     prevBtn?.addEventListener('click', () => {
       const newIndex = (currentIndex - 1 + items.length) % items.length;
-      showSlide(newIndex);
+      showSlide(newIndex, 'prev');
     });
 
     nextBtn?.addEventListener('click', () => {
       const newIndex = (currentIndex + 1) % items.length;
-      showSlide(newIndex);
+      showSlide(newIndex, 'next');
     });
 
     indicators.forEach((indicator, index) => {

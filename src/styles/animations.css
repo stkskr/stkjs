@@ -25,7 +25,7 @@
               top var(--duration-main) var(--timing-main),
               left var(--duration-main) var(--timing-main);
   pointer-events: auto;
-  cursor: pointer;
+  cursor: default;
 }
 
 .center-circle .logo-gif {
@@ -85,6 +85,25 @@
 .stateExpanding .content-inner {
   opacity: 1;
   transition-delay: var(--duration-fade-delay);
+}
+
+/* Reduce side padding as screen gets smaller */
+@media (max-width: 1600px) {
+  .content-inner {
+    padding: 40px 10% 0;
+  }
+}
+
+@media (max-width: 1400px) {
+  .content-inner {
+    padding: 40px 10% 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content-inner {
+    padding: 40px 8% 0;
+  }
 }
 
 /* GPU Acceleration for all animated elements */

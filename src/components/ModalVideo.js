@@ -37,7 +37,9 @@ export class ModalVideo {
     const iframe = this.modalElement.querySelector('iframe');
     // Convert regular YouTube URL to embed URL with autoplay
     const videoId = this.extractVideoId(videoUrl);
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    const timestamp = this.extractTimestamp(videoUrl);
+    const timestampParam = timestamp ? `&start=${timestamp}` : '';
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1${timestampParam}`;
 
     this.modalElement.classList.add('active');
     this.isOpen = true;
@@ -55,8 +57,14 @@ export class ModalVideo {
 
   extractVideoId(url) {
     // Handle both youtube.com/watch?v=ID and youtu.be/ID formats
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s?]+)/);
     return match ? match[1] : '';
+  }
+
+  extractTimestamp(url) {
+    // Extract timestamp from &t=XXX or ?t=XXX parameter
+    const match = url.match(/[?&]t=(\d+)/);
+    return match ? match[1] : null;
   }
 
   mount(parent) {

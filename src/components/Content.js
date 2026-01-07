@@ -69,7 +69,7 @@ export class Content {
           </iframe>
         </div>
 
-        <a href="/assets/company-profile.pdf" download class="company-download-btn">
+        <a href="/assets/files/SticksandStones_CompanyBrochure.pdf" download class="company-download-btn">
           <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="download-arrow" d="M10 3V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <path class="download-arrow" d="M6 10L10 14L14 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -82,7 +82,7 @@ export class Content {
 
     // Add "Meet our team" title
     const teamTitleDiv = createElement('div', 'team-section-title');
-    teamTitleDiv.innerHTML = `<h2>${language === 'ko' ? '우리 팀을 만나보세요' : 'Meet our team'}</h2>`;
+    teamTitleDiv.innerHTML = `<h2>Meet our team</h2>`;
     this.innerElement.appendChild(teamTitleDiv);
 
     // Add team profiles after the title
@@ -90,7 +90,7 @@ export class Content {
 
     // Add "Clients say" title
     const clientsTitleDiv = createElement('div', 'team-section-title');
-    clientsTitleDiv.innerHTML = `<h2>${language === 'ko' ? '클라이언트의 말' : 'Clients say'}</h2>`;
+    clientsTitleDiv.innerHTML = `<h2>Clients say</h2>`;
     this.innerElement.appendChild(clientsTitleDiv);
 
     // Add quote carousel after clients title
@@ -98,7 +98,7 @@ export class Content {
 
     // Add "Our clients" title
     const clientLogosTitleDiv = createElement('div', 'team-section-title');
-    clientLogosTitleDiv.innerHTML = `<h2>${language === 'ko' ? '우리의 클라이언트' : 'Our clients'}</h2>`;
+    clientLogosTitleDiv.innerHTML = `<h2>Our clients</h2>`;
     this.innerElement.appendChild(clientLogosTitleDiv);
 
     // Add client marquee
@@ -106,7 +106,7 @@ export class Content {
 
     // Add "Our space" title
     const spaceTitleDiv = createElement('div', 'team-section-title');
-    spaceTitleDiv.innerHTML = `<h2>${language === 'ko' ? '우리의 공간' : 'Our space'}</h2>`;
+    spaceTitleDiv.innerHTML = `<h2>Our space</h2>`;
     this.innerElement.appendChild(spaceTitleDiv);
 
     // Add space gallery
@@ -116,6 +116,7 @@ export class Content {
     const ctaDiv = createElement('div');
     ctaDiv.innerHTML = this.renderCallToAction(language);
     this.innerElement.appendChild(ctaDiv);
+    this.attachCTAListeners();
   }
 
   renderStandardContent(section, language) {
@@ -128,6 +129,7 @@ export class Content {
       </div>
       ${this.renderCallToAction(language)}
     `;
+    this.attachCTAListeners();
   }
 
   renderServices(language) {
@@ -139,6 +141,7 @@ export class Content {
     const ctaDiv = createElement('div');
     ctaDiv.innerHTML = this.renderCallToAction(language);
     this.innerElement.appendChild(ctaDiv);
+    this.attachCTAListeners();
   }
 
   renderPortfolio(language) {
@@ -150,6 +153,7 @@ export class Content {
     const ctaDiv = createElement('div');
     ctaDiv.innerHTML = this.renderCallToAction(language);
     this.innerElement.appendChild(ctaDiv);
+    this.attachCTAListeners();
   }
 
   renderClients(language) {
@@ -166,6 +170,7 @@ export class Content {
     const ctaDiv = createElement('div');
     ctaDiv.innerHTML = this.renderCallToAction(language);
     this.innerElement.appendChild(ctaDiv);
+    this.attachCTAListeners();
   }
 
   renderCallToAction(language) {
@@ -175,6 +180,17 @@ export class Content {
         <button class="cta-button">Let's talk</button>
       </div>
     `;
+  }
+
+  attachCTAListeners() {
+    // Attach click handlers to all Let's Talk buttons
+    const ctaButtons = this.element.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Dispatch custom event to open contact tab
+        window.dispatchEvent(new CustomEvent('openContactTab'));
+      });
+    });
   }
 
   mount(parent) {

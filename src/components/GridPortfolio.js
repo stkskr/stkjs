@@ -126,33 +126,19 @@ export class GridPortfolio {
           return mappedCategories.includes(this.currentCategory);
         });
 
-    // Get current items in the grid
-    const currentItems = Array.from(this.gridElement.querySelectorAll('.portfolio-item'));
-    const currentIds = new Set(currentItems.map(el => el.dataset.id));
-    const newIds = new Set(filteredData.map(item => item.id));
+    // Fade out
+    this.gridElement.style.opacity = '0';
 
-    // Remove items that are no longer in filtered data
-    currentItems.forEach(item => {
-      const itemEl = item;
-      if (itemEl.dataset.id && !newIds.has(itemEl.dataset.id)) {
-        itemEl.classList.add('portfolio-item-exit');
-        setTimeout(() => itemEl.remove(), 300);
-      }
-    });
+    // After fade out, replace content and fade in
+    setTimeout(() => {
+      this.gridElement.innerHTML = '';
 
-    // Add or update items
-    filteredData.forEach((item, index) => {
-      const originalIndex = portfolioData.indexOf(item);
-      let itemElement = this.gridElement.querySelector(`[data-id="${item.id}"]`);
-
-      if (!itemElement) {
-        // Create new item
-        itemElement = createElement('div', 'portfolio-item');
-        itemElement.dataset.id = item.id;
-        itemElement.dataset.index = originalIndex.toString();
+      filteredData.forEach(item => {
+        const originalIndex = portfolioData.indexOf(item);
+        const itemElement = createElement('div', 'portfolio-item');
         itemElement.classList.add('portfolio-item-enter');
+        itemElement.dataset.index = originalIndex.toString();
 
-        // Load and display thumbnail (now synchronous!)
         const thumbnailPath = getThumbnailPath(item.id);
         const img = createElement('img');
         img.src = thumbnailPath;
@@ -163,27 +149,18 @@ export class GridPortfolio {
           this.modal.open(originalIndex, this.currentLanguage);
         });
 
-        // Insert at correct position
-        const existingItems = Array.from(this.gridElement.querySelectorAll('.portfolio-item:not(.portfolio-item-exit)'));
-        if (index >= existingItems.length) {
-          this.gridElement.appendChild(itemElement);
-        } else {
-          this.gridElement.insertBefore(itemElement, existingItems[index]);
-        }
+        this.gridElement.appendChild(itemElement);
+      });
 
-        // Trigger animation
-        requestAnimationFrame(() => {
-          itemElement.classList.remove('portfolio-item-enter');
+      // Fade in
+      requestAnimationFrame(() => {
+        this.gridElement.style.opacity = '1';
+        // Remove enter class to trigger fade
+        this.gridElement.querySelectorAll('.portfolio-item-enter').forEach(item => {
+          item.classList.remove('portfolio-item-enter');
         });
-      } else {
-        // Update existing item position if needed
-        const existingItems = Array.from(this.gridElement.querySelectorAll('.portfolio-item:not(.portfolio-item-exit)'));
-        const currentIndex = existingItems.indexOf(itemElement);
-        if (currentIndex !== index && index < existingItems.length) {
-          this.gridElement.insertBefore(itemElement, existingItems[index]);
-        }
-      }
-    });
+      });
+    }, 200);
   }
 
   getElement() {

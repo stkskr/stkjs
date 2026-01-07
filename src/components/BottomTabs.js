@@ -45,6 +45,9 @@ export class BottomTabs {
 
     contactBtn.addEventListener('click', () => this.openTab('contact'));
     faqBtn.addEventListener('click', () => this.openTab('faq'));
+
+    // Listen for custom event to open contact tab from anywhere
+    window.addEventListener('openContactTab', () => this.openTab('contact'));
   }
 
   openTab(tab) {
@@ -254,18 +257,22 @@ export class BottomTabs {
 
             <div class="contact-section">
               <h3>Office:</h3>
-              <p>서울 용산구<br>녹사평대로26길 42<br>스틱스앤스톤스 빌딩</p>
+              <p>${this.language === 'ko'
+                ?'서울 용산구<br>녹사평대로26길 42<br>스틱스앤스톤스 빌딩'
+                : '42, Noksapyeong-daero 26-gil, <br>Yongsan-gu, Seoul, <br>Republic of Korea'}</p>
             </div>
 
             <div class="contact-section">
               <p class="contact-tagline">${this.language === 'ko'
-                ? 'Words that stick, boosting brands. 글로벌 브랜딩과 마케팅에 특화된 영어 전문 카피라이팅 회사, 스틱스앤스톤스 서울.'
+                ? 'Words that stick, boosting brands. <br> 글로벌 브랜딩과 마케팅에 특화된 영어 전문 카피라이팅 회사, 스틱스앤스톤스 서울.'
                 : 'Words that stick, boosting brands. <br> A specialized English copywriting agency for global branding and marketing, Sticks & Stones Seoul.'
               }</p>
             </div>
 
             <div class="contact-section">
-              <p>(주)스틱스앤스톤스 119-88-00409<br>대표자: Richard King Kim</p>
+              <p>${this.language === 'ko'
+                ?'(주)스틱스앤스톤스 119-88-00409<br>대표자: Richard King Kim'
+                : 'Sticks and Stones 119-88-00409<br>CEO: Richard King Kim'}</p>
             </div>
           </div>
 
