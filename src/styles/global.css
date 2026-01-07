@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+/* Custom text selection colors */
+::selection {
+  background: var(--color-navy);
+  color: var(--color-content-white);
+}
+
+::-moz-selection {
+  background: var(--color-navy);
+  color: var(--color-content-white);
+}
+
 body {
   margin: 0;
   background: var(--color-content-white);

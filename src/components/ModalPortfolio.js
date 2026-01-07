@@ -81,6 +81,25 @@ export class ModalPortfolio {
         this.close();
       }
     });
+
+    // Arrow key navigation handler
+    this.handleKeyDown = (e) => {
+      // Only handle keys when modal is active
+      if (!this.element.classList.contains('active')) return;
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        this.navigate(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        this.navigate(1);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.close();
+      }
+    };
+
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   navigate(direction) {
@@ -213,6 +232,13 @@ export class ModalPortfolio {
     const { language } = stateManager.getState();
     const newPath = router.buildPath('portfolio', language);
     router.navigate(newPath);
+  }
+
+  destroy() {
+    // Clean up event listener when component is destroyed
+    if (this.handleKeyDown) {
+      document.removeEventListener('keydown', this.handleKeyDown);
+    }
   }
 
   getMediaTypeLabels(mediaType, language) {

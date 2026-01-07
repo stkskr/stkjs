@@ -15,7 +15,8 @@
       "Bash(cd c:UsersbrixtDesktopWeb Toolsstksjs)",
       "Bash(powershell -Command:*)",
       "Bash(sort:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

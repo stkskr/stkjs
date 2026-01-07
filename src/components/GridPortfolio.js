@@ -152,12 +152,16 @@ export class GridPortfolio {
         this.gridElement.appendChild(itemElement);
       });
 
-      // Fade in
+      // Fade in grid
       requestAnimationFrame(() => {
         this.gridElement.style.opacity = '1';
-        // Remove enter class to trigger fade
-        this.gridElement.querySelectorAll('.portfolio-item-enter').forEach(item => {
-          item.classList.remove('portfolio-item-enter');
+
+        // Stagger the drop animation for each item
+        const items = this.gridElement.querySelectorAll('.portfolio-item-enter');
+        items.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.remove('portfolio-item-enter');
+          }, index * 30); // 30ms stagger delay per item
         });
       });
     }, 200);

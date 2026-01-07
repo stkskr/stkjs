@@ -15,6 +15,7 @@ import { AudioToggle } from './components/AudioToggle.js';
 import { CloseButton } from './components/CloseButton.js';
 import { BottomTabs } from './components/BottomTabs.js';
 import { initializeMarqueeHover } from './utils/marquee.js';
+import { keyboardHandler } from './utils/keyboard.js';
 
 class App {
   constructor() {

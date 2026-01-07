@@ -183,9 +183,33 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
   text-transform: none;
   letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.cta-button::before {
+  content: '';
+  width: 0px;
+  height: 20px;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="white" stroke-width="38"><path d="M255.995,3.769C114.605,3.769,0,88.187,0,217.102c0,79.518,49.369,148.08,139.713,201.623l148.909,89.506 l1.677-82.807C422.615,418.055,512,340.045,512,217.102C512,88.187,397.386,3.769,255.995,3.769z M288.175,387.319l-35.31,1.966 l-0.717,35.366l-0.346,16.928l-92.635-55.686C78.876,338.313,38.161,281.519,38.161,217.102 c0-115.006,109.583-175.172,217.834-175.172s217.844,60.167,217.844,175.172C473.839,317.211,404.429,380.843,288.175,387.319z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  flex-shrink: 0;
+}
+
+.cta-button:hover::before {
+  opacity: 1;
+  width: 20px;
+  margin-right: 8px;
+  transform: scale(1);
 }
 
 .cta-button:hover {
@@ -483,20 +507,6 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   opacity: 0;
   transform: translateY(-100%);
 }
-
-/* Stagger cascade effect using nth-child delays */
-.portfolio-item-enter:nth-child(1) { transition-delay: 0ms; }
-.portfolio-item-enter:nth-child(2) { transition-delay: 30ms; }
-.portfolio-item-enter:nth-child(3) { transition-delay: 60ms; }
-.portfolio-item-enter:nth-child(4) { transition-delay: 90ms; }
-.portfolio-item-enter:nth-child(5) { transition-delay: 120ms; }
-.portfolio-item-enter:nth-child(6) { transition-delay: 150ms; }
-.portfolio-item-enter:nth-child(7) { transition-delay: 180ms; }
-.portfolio-item-enter:nth-child(8) { transition-delay: 210ms; }
-.portfolio-item-enter:nth-child(9) { transition-delay: 240ms; }
-.portfolio-item-enter:nth-child(10) { transition-delay: 270ms; }
-.portfolio-item-enter:nth-child(11) { transition-delay: 300ms; }
-.portfolio-item-enter:nth-child(12) { transition-delay: 330ms; }
 
 .portfolio-item:hover {
   transform: scale(1.02);
@@ -1075,6 +1085,54 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   background: #fff;
+  position: relative;
+}
+
+/* Quote Carousel Navigation Buttons */
+.quote-carousel-prev,
+.quote-carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quote-carousel-prev:hover,
+.quote-carousel-next:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.quote-carousel-container:hover .quote-carousel-prev,
+.quote-carousel-container:hover .quote-carousel-next {
+  opacity: 1;
+}
+
+.quote-carousel-prev {
+  left: 15px;
+}
+
+.quote-carousel-next {
+  right: 15px;
+}
+
+.quote-carousel-prev svg,
+.quote-carousel-next svg {
+  display: block;
 }
 
 .carousel-track {

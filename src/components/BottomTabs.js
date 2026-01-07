@@ -252,14 +252,32 @@ export class BottomTabs {
 
             <div class="contact-section">
               <h3>Email:</h3>
-              <p>talk@stks.kr</p>
+              <div class="copyable-container">
+                <p>talk@stks.kr</p>
+                <button class="copy-btn" data-copy="talk@stks.kr" aria-label="Copy email">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span class="copy-tooltip"></span>
+                </button>
+              </div>
             </div>
 
             <div class="contact-section">
               <h3>Office:</h3>
-              <p>${this.language === 'ko'
-                ?'서울 용산구<br>녹사평대로26길 42<br>스틱스앤스톤스 빌딩'
-                : '42, Noksapyeong-daero 26-gil, <br>Yongsan-gu, Seoul, <br>Republic of Korea'}</p>
+              <div class="copyable-container">
+                <p>${this.language === 'ko'
+                  ?'서울 용산구<br>녹사평대로26길 42<br>스틱스앤스톤스 빌딩'
+                  : '42, Noksapyeong-daero 26-gil, <br>Yongsan-gu, Seoul, <br>Republic of Korea'}</p>
+                <button class="copy-btn" data-copy="${this.language === 'ko' ? '서울 용산구 녹사평대로26길 42 스틱스앤스톤스 빌딩' : '42, Noksapyeong-daero 26-gil, Yongsan-gu, Seoul, Republic of Korea'}" aria-label="Copy address">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span class="copy-tooltip"></span>
+                </button>
+              </div>
             </div>
 
             <div class="contact-section">
@@ -337,6 +355,31 @@ export class BottomTabs {
 
     // Set up ResizeObserver for automatic height updates (desktop only)
     this.setupResizeObserver();
+
+    // Add copy functionality - works for both button and container clicks
+    this.container.addEventListener('click', (e) => {
+      const copyableContainer = e.target.closest('.copyable-container');
+      if (copyableContainer) {
+        const copyBtn = copyableContainer.querySelector('.copy-btn');
+        if (copyBtn) {
+          const textToCopy = copyBtn.dataset.copy;
+          const tooltip = copyBtn.querySelector('.copy-tooltip');
+
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            // Show tooltip with language-specific message
+            tooltip.textContent = this.language === 'ko' ? '복사 완료!' : 'Copied!';
+            tooltip.classList.add('show');
+
+            // Hide tooltip after 2 seconds
+            setTimeout(() => {
+              tooltip.classList.remove('show');
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy:', err);
+          });
+        }
+      }
+    });
 
     // Add FAQ accordion functionality after mounting
     this.container.addEventListener('click', (e) => {
