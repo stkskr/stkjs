@@ -141,7 +141,6 @@ export class ModalPortfolio {
         this.element.classList.add('active');
         document.body.style.overflow = 'hidden';
         this.attachCarouselListeners();
-        this.attachThumbnailFallback();
       }
 
       this.updateNavigationButtons();
@@ -167,7 +166,6 @@ export class ModalPortfolio {
       const content = this.renderModalContent(item, language);
       modalBody.innerHTML = content;
       this.attachCarouselListeners();
-      this.attachThumbnailFallback();
 
       // Measure new height with new content
       const newHeight = modalContent.offsetHeight;
@@ -449,32 +447,6 @@ export class ModalPortfolio {
     indicators.forEach((indicator, index) => {
       indicator.addEventListener('click', () => {
         showSlide(index);
-      });
-    });
-  }
-
-  attachThumbnailFallback() {
-    // Add error handling for YouTube thumbnails with quality fallback
-    const thumbnails = this.element.querySelectorAll('.youtube-facade img');
-
-    thumbnails.forEach(img => {
-      const facade = img.closest('.youtube-facade');
-      const videoId = facade?.dataset.videoId;
-
-      if (!videoId) return;
-
-      const fallbackUrls = getYoutubeThumbnailUrls(videoId);
-      let currentIndex = 0;
-
-      img.addEventListener('error', function handleError() {
-        currentIndex++;
-        if (currentIndex < fallbackUrls.length) {
-          // Try next quality level
-          this.src = fallbackUrls[currentIndex];
-        } else {
-          // Ultimate fallback: gray placeholder SVG
-          this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect fill="%23ddd" width="1200" height="675"/></svg>';
-        }
       });
     });
   }
