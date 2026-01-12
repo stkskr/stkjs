@@ -10,10 +10,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 17vw;
-  height: 17vw;
-  max-width: 240px;
-  max-height: 240px;
+  width: 15vw;
+  height: 15vw;
+  max-width: 220px;
+  max-height: 220px;
   min-width: 120px;
   min-height: 120px;
   display: flex;
@@ -25,7 +25,7 @@
               top var(--duration-main) var(--timing-main),
               left var(--duration-main) var(--timing-main);
   pointer-events: auto;
-  cursor: pointer;
+  cursor: default;
 }
 
 .center-circle:active {

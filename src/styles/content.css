@@ -8,14 +8,15 @@
   z-index: var(--z-content);
   top: 100%;
   overflow-x: hidden;
+  visibility: hidden;
 }
 
 .stateExpanding .content-box {
   position: absolute;
   top: 50vh;
   left: 0;
-  /* No fixed height - content dictates container height */
   min-height: 50vh;
+  visibility: visible;
 }
 
 .content-inner h1 {
@@ -121,29 +122,30 @@
 }
 
 .company-download-btn .download-arrow {
-  transition: transform 300ms ease;
   transform-origin: center;
+  /* Auto-repeat animation every 4 seconds */
+  animation: download-bounce 4s ease-in-out infinite;
 }
 
-/* Cute bouncing download animation on hover - only arrow moves */
+/* Speed up on hover */
 .company-download-btn:hover .download-arrow {
-  animation: download-bounce 600ms ease-in-out;
+  animation-duration: 600ms;
 }
 
 @keyframes download-bounce {
   0%, 100% {
     transform: translateY(0);
   }
-  20% {
+  3% {
     transform: translateY(-4px);
   }
-  40% {
+  6% {
     transform: translateY(0);
   }
-  60% {
+  9% {
     transform: translateY(-2px);
   }
-  80% {
+  12%, 88% {
     transform: translateY(0);
   }
 }
@@ -197,7 +199,7 @@
   content: '';
   width: 0px;
   height: 20px;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="white" stroke-width="38"><path d="M255.995,3.769C114.605,3.769,0,88.187,0,217.102c0,79.518,49.369,148.08,139.713,201.623l148.909,89.506 l1.677-82.807C422.615,418.055,512,340.045,512,217.102C512,88.187,397.386,3.769,255.995,3.769z M288.175,387.319l-35.31,1.966 l-0.717,35.366l-0.346,16.928l-92.635-55.686C78.876,338.313,38.161,281.519,38.161,217.102 c0-115.006,109.583-175.172,217.834-175.172s217.844,60.167,217.844,175.172C473.839,317.211,404.429,380.843,288.175,387.319z"/></svg>');
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white"><path d="M255.995,3.769C114.605,3.769,0,88.187,0,217.102c0,79.518,49.369,148.08,139.713,201.623l148.909,89.506 l1.677-82.807C422.615,418.055,512,340.045,512,217.102C512,88.187,397.386,3.769,255.995,3.769z M288.175,387.319l-35.31,1.966 l-0.717,35.366l-0.346,16.928l-92.635-55.686C78.876,338.313,38.161,281.519,38.161,217.102 c0-115.006,109.583-175.172,217.834-175.172s217.844,60.167,217.844,175.172C473.839,317.211,404.429,380.843,288.175,387.319z"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1160,16 +1162,32 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: block;
 }
 
+.quote-carousel-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: 100%;
+  /* Safari-specific: Force integer pixel positioning */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .quote-slide {
   display: flex;
-  min-width: 100%;
+  flex-shrink: 0;
+  flex-grow: 0;
   align-items: stretch;
+  /* Each slide takes full container width */
+  width: 100%;
+  /* Safari-specific: Prevent subpixel rendering issues */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 /* Dark Quote Box */

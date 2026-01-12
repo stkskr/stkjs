@@ -13,7 +13,7 @@
   --timing-main: cubic-bezier(0.4, 0, 0.2, 1);
   --timing-ease: ease;
 
-  /* Durations */
+/* Durations */
   --duration-main: 600ms;
   --duration-close: 400ms;
   --duration-fade: 300ms;

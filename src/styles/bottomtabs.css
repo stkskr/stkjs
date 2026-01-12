@@ -4,8 +4,9 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 300;
-  pointer-events: none;
+  /* Safari fix: Elevate above all background elements (quadrants at z-150, close at z-200) */
+  z-index: 9999;
+  pointer-events: none; /* Allow clicks through wrapper to panels */
 }
 
 /* Tab Panel - Contains both buttons and content as unified element */
@@ -16,7 +17,19 @@
   left: 50%;
   transform: translateX(-50%);
   transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none; /* Allow clicks to pass through to panel underneath */
+  pointer-events: none; /* Allow clicks to pass through to panel underneath when closed */
+}
+
+/* Enable pointer events when panel is active */
+.bottom-tabs.faq-active .faq-panel,
+.bottom-tabs.contact-active .contact-panel {
+  pointer-events: auto;
+}
+
+/* Safari fix: Let children handle pointer events, not the scroll container */
+.bottom-tabs.faq-active .faq-panel .bottom-tab-inner,
+.bottom-tabs.contact-active .contact-panel .bottom-tab-inner {
+  pointer-events: auto;
 }
 
 /* Default z-index for panels */
@@ -35,8 +48,9 @@
 
     height: var(--faq-panel-height);
     max-height: 85vh;
-    /* Formula: Start at - (Total Height - 42px Tab Height) */
-    bottom: calc(-1 * (var(--faq-panel-height) - 42px));
+    /* Formula: Start at - (Total Height - 42px Tab Height)
+       But clamp to max 85vh - 42px to ensure tab stays visible */
+    bottom: max(calc(-1 * (var(--faq-panel-height) - 42px)), calc(-85vh + 42px));
     transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
@@ -53,7 +67,9 @@
 
     height: var(--contact-panel-height);
     max-height: 85vh;
-    bottom: calc(-1 * (var(--contact-panel-height) - 42px));
+    /* Formula: Start at - (Total Height - 42px Tab Height)
+       But clamp to max 85vh - 42px to ensure tab stays visible */
+    bottom: max(calc(-1 * (var(--contact-panel-height) - 42px)), calc(-85vh + 42px));
     transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
@@ -179,10 +195,16 @@
 /* Ensure buttons container allows clicks through when not active */
 .bottom-tabs-buttons {
   pointer-events: none;
+  /* Prevent buttons from capturing scroll events */
+  position: relative;
+  z-index: 10;
 }
 
 .bottom-tab-btn {
   pointer-events: auto;
+  /* Safari: Don't let button capture scroll wheel events */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .bottom-tab-btn {
@@ -217,15 +239,33 @@
   font-size: 10px;
 }
 
+/* Disable background scrolling when FAQ/Contact is active */
+body.faq-active,
+body.contact-active,
+body.faq-active .container,
+body.contact-active .container {
+  /* Safari fix: Use pan-y instead of none to allow mouse events while preventing scroll */
+  touch-action: pan-y;
+  overflow: hidden !important;
+  /* Safari-specific: Disable momentum scrolling on background */
+  -webkit-overflow-scrolling: auto;
+}
+
 /* Content Panel - Below buttons in same container */
 .bottom-tabs-content {
   width: 100%;
   height: calc(100% - 42px);
   border-radius: 12px 12px 0 0;
-  overflow-y: auto;
+  overflow-y: auto !important;
   overflow-x: hidden;
   position: relative;
-  pointer-events: auto; /* Re-enable clicks for content area */
+  /* Safari fix: Compositor layer promotion for consistent hit-testing */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Prevent scroll chaining to body when reaching top/bottom */
+  overscroll-behavior: contain;
+  /* Safari fix: Allow all pointer events, not just pan gestures */
+  touch-action: manipulation;
 }
 
 /* Hide scrollbar during FAQ animations when not needed */
@@ -246,6 +286,8 @@
 /* FAQ content styling */
 .faq-panel .bottom-tabs-content {
   background: #c8c8c8;
+  border:5px solid #c8c8c8;
+  box-sizing: border-box;
 }
 
 /* Close Button */
@@ -469,13 +511,21 @@
   width: 100%;
   padding: 20px 24px;
   border: none;
-  background: none;
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 15px;
   text-align: left;
+  line-height: 1.4;
   transition: background 150ms ease;
+  pointer-events: auto;
+  position: relative;
+  /* Safari fix: Remove competing z-index, let natural stacking work */
+  z-index: 0;
+  /* Safari fix: Normalize button appearance */
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .faq-question:hover {
@@ -494,6 +544,8 @@
   font-weight: bold;
   font-size: 16px;
   flex-shrink: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .faq-q-text {
@@ -502,12 +554,16 @@
   font-weight: 500;
   color: #333;
   line-height: 1.4;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .faq-toggle {
   font-size: 14px;
   color: #666;
   flex-shrink: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .faq-answer {

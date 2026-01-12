@@ -48,8 +48,6 @@ body.stateExpanding {
   height: 100dvh;
   background: var(--color-content-white);
   overflow: hidden;
-  /* Clip content that extends beyond viewport on home */
-  clip-path: inset(0 0 0 0);
 }
 
 /* When expanded, container grows to accommodate content */
@@ -57,12 +55,14 @@ body.stateExpanding {
   height: auto !important;
   min-height: 100dvh;
   overflow: visible !important;
-  clip-path: none;
 }
 
-/* Safari Ghost Layer Fix: Allow interaction with content */
-.stateExpanding .content-box {
-  /* Safari fix: Ensure text selection works */
-  -webkit-user-select: text !important;
-  user-select: text !important;
+/* Safari fix: When FAQ/Contact tab is active, disable background quadrants from capturing events */
+body.faq-active .quadrant,
+body.faq-active .sub-quadrant,
+body.faq-active .center-circle,
+body.contact-active .quadrant,
+body.contact-active .sub-quadrant,
+body.contact-active .center-circle {
+  pointer-events: none !important;
 }

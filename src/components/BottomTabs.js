@@ -62,15 +62,69 @@ export class BottomTabs {
 
     if (tab) {
       this.container.classList.add(`${tab}-active`);
+      document.body.classList.add(`${tab}-active`); // Add to body for CSS touch-action
       this.renderContent(tab);
       this.updateArrows();
+
+      // Safari-optimized scroll handling
+      setTimeout(() => {
+        const scrollContainer = this.container.querySelector(`.${tab}-panel .bottom-tabs-content`);
+        if (scrollContainer) {
+          // Safari bug fix: If at exactly 0, it won't claim the scroll gesture
+          // Nudge it to 1px to "wake up" the scroll engine
+          if (scrollContainer.scrollTop === 0) {
+            scrollContainer.scrollTop = 1;
+          }
+
+          // Safari fix: Do NOT focus the scroll container
+          // Focusing creates a "scroll gesture capture zone" in the upper half
+          // that blocks click events from reaching child buttons
+          // The 1px scroll nudge above is sufficient for Safari scroll recognition
+
+          // Prevent scroll leak at boundaries (Safari rubber-band fix)
+          if (!this.touchStartHandler) {
+            this.touchStartHandler = (e) => {
+              const top = scrollContainer.scrollTop;
+              const totalScroll = scrollContainer.scrollHeight;
+              const currentScroll = top + scrollContainer.offsetHeight;
+
+              // If at the very top, lift it 1px to prevent upward leak
+              if (top === 0) {
+                scrollContainer.scrollTop = 1;
+              }
+              // If at the very bottom, drop it 1px to prevent downward leak
+              else if (currentScroll >= totalScroll) {
+                scrollContainer.scrollTop = top - 1;
+              }
+            };
+            scrollContainer.addEventListener('touchstart', this.touchStartHandler, { passive: true });
+          }
+        }
+      }, 150);
     }
   }
 
   closeTab() {
     this.activeTab = null;
     this.container.classList.remove('active', 'contact-active', 'faq-active');
+    document.body.classList.remove('faq-active', 'contact-active'); // Remove from body
     this.updateArrows();
+
+    // Remove touch handler if it exists
+    if (this.touchStartHandler) {
+      const scrollContainers = this.container.querySelectorAll('.bottom-tabs-content');
+      scrollContainers.forEach(container => {
+        container.removeEventListener('touchstart', this.touchStartHandler);
+      });
+      this.touchStartHandler = null;
+    }
+
+    // Reset panel heights to ensure correct minimize position
+    // Use a small delay to allow the height calculation to complete
+    setTimeout(() => {
+      this.updateFaqPanelHeight();
+      this.updateContactPanelHeight();
+    }, 50);
   }
 
   updateArrows() {

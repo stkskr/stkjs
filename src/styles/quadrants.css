@@ -3,6 +3,7 @@
   position: absolute;
   width: 50%;
   height: 50%;
+  min-height: 50vh; /* Safety net: prevents gap during container height transition */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +112,7 @@
 /* Selected Quadrant Stays Top-Left */
 .quadrant.selected {
   width: 50% !important;
-  height: 50vh !important;
+  height: 50dvh !important;
   top: 0 !important;
   left: 0 !important;
   z-index: var(--z-selected) !important;

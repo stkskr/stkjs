@@ -11,6 +11,11 @@ export class QuoteCarousel {
     this.slideInterval = 3500;
     this.autoScroll = null;
     this.language = 'ko';
+    this.isTransitioning = false;
+    this.slideCount = quotesData.length;
+    // Maintain 3 full sets of slides for seamless infinite scrolling
+    this.setsCount = 3;
+    this.slideWidth = 0; // Will be calculated on mount
 
     // Create navigation buttons
     this.prevBtn = createElement('button', 'quote-carousel-prev');
@@ -63,19 +68,35 @@ export class QuoteCarousel {
     });
   }
 
+  updateSlideWidth() {
+    // Get the precise width of the container in pixels
+    this.slideWidth = Math.round(this.element.offsetWidth);
+  }
+
   render() {
     // Clear existing slides
     this.track.innerHTML = '';
 
-    // Create slides for each quote
-    quotesData.forEach((quoteData) => {
-      const slide = this.createSlide(quoteData);
-      this.track.appendChild(slide);
-    });
+    // Create multiple sets of slides for seamless infinite scrolling
+    for (let set = 0; set < this.setsCount; set++) {
+      quotesData.forEach((quoteData) => {
+        const slide = this.createSlide(quoteData);
+        this.track.appendChild(slide);
+      });
+    }
 
-    // Reset to first slide
-    this.currentIndex = 0;
-    this.moveToSlide(0);
+    // Update slide width and position
+    this.updateSlideWidth();
+
+    // Start at the middle set (set index 1)
+    this.currentIndex = this.slideCount;
+    this.track.style.transition = 'none';
+    this.track.style.transform = `translate3d(-${this.currentIndex * this.slideWidth}px, 0, 0)`;
+
+    // Re-enable transitions after a frame
+    requestAnimationFrame(() => {
+      this.track.style.transition = '';
+    });
   }
 
   createSlide(quoteData) {
@@ -103,17 +124,51 @@ export class QuoteCarousel {
   }
 
   moveToSlide(index) {
-    const slideCount = quotesData.length;
+    // Prevent rapid clicks during transition
+    if (this.isTransitioning) return;
 
-    // Loop around if needed
-    if (index < 0) {
-      index = slideCount - 1;
-    } else if (index >= slideCount) {
-      index = 0;
+    // Update slide width in case of resize
+    this.updateSlideWidth();
+
+    // Check if we need to reposition BEFORE starting the transition
+    const totalSlides = this.slideCount * this.setsCount;
+
+    // If trying to move beyond the last set, wrap to middle set first
+    if (index >= this.slideCount * 2) {
+      const offsetInSet = index % this.slideCount;
+      this.track.style.transition = 'none';
+      this.currentIndex = this.slideCount + offsetInSet;
+      this.track.style.transform = `translate3d(-${this.currentIndex * this.slideWidth}px, 0, 0)`;
+      // Force reflow
+      this.track.offsetHeight;
+      this.track.style.transition = '';
+      // Now move to next slide from here
+      index = this.currentIndex + 1;
+    }
+    // If trying to move before the first set, wrap to middle set first
+    else if (index < 0) {
+      const offsetInSet = ((index % this.slideCount) + this.slideCount) % this.slideCount;
+      this.track.style.transition = 'none';
+      this.currentIndex = this.slideCount + offsetInSet;
+      this.track.style.transform = `translate3d(-${this.currentIndex * this.slideWidth}px, 0, 0)`;
+      // Force reflow
+      this.track.offsetHeight;
+      this.track.style.transition = '';
+      // Now move to previous slide from here
+      index = this.currentIndex - 1;
     }
 
-    this.track.style.transform = `translateX(-${index * 100}%)`;
+    this.isTransitioning = true;
     this.currentIndex = index;
+    this.track.style.transform = `translate3d(-${this.currentIndex * this.slideWidth}px, 0, 0)`;
+
+    // Listen for transition end to reset flag
+    const handleTransitionEnd = () => {
+      this.isTransitioning = false;
+      this.track.removeEventListener('transitionend', handleTransitionEnd);
+    };
+
+    this.track.addEventListener('transitionend', handleTransitionEnd);
   }
 
   autoAdvance() {
@@ -136,10 +191,24 @@ export class QuoteCarousel {
     parent.appendChild(this.element);
     this.render();
     this.startAutoScroll();
+
+    // Handle window resize to recalculate slide width
+    this.resizeHandler = () => {
+      this.updateSlideWidth();
+      this.track.style.transition = 'none';
+      this.track.style.transform = `translate3d(-${this.currentIndex * this.slideWidth}px, 0, 0)`;
+      requestAnimationFrame(() => {
+        this.track.style.transition = '';
+      });
+    };
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   unmount() {
     this.stopAutoScroll();
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
     if (this.element.parentNode) {
       this.element.parentNode.removeChild(this.element);
     }
