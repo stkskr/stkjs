@@ -70,8 +70,11 @@ export class TeamProfiles {
     // Add tap to toggle on mobile (only one open at a time)
     const isMobile = () => window.innerWidth <= 768;
 
-    card.addEventListener('click', () => {
+    const handleToggle = (e) => {
       if (isMobile()) {
+        e.preventDefault();
+        e.stopPropagation();
+
         const isCurrentlyActive = card.classList.contains('mobile-active');
 
         // Close all other profiles first
@@ -85,7 +88,11 @@ export class TeamProfiles {
           card.classList.add('mobile-active');
         }
       }
-    });
+    };
+
+    // Use both touch and click events for better mobile compatibility
+    card.addEventListener('touchend', handleToggle, { passive: false });
+    card.addEventListener('click', handleToggle);
 
     return card;
   }
