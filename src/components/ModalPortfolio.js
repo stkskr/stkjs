@@ -13,6 +13,7 @@ export class ModalPortfolio {
     this.currentIndex = -1;
     this.language = 'ko';
     this.hotkeyModal = new HotkeyModal();
+    this.savedScrollY = 0;
     this.render();
 
     // Subscribe to state changes
@@ -22,7 +23,7 @@ export class ModalPortfolio {
       } else if (!state.portfolioSlug && this.element.classList.contains('active')) {
         // Close modal without navigating
         this.element.classList.remove('active');
-        document.body.style.overflow = '';
+        this.unlockScroll();
       }
     });
   }
@@ -128,6 +129,26 @@ export class ModalPortfolio {
     document.addEventListener('keydown', this.handleKeyDown);
   }
 
+  lockScroll() {
+    this.savedScrollY = window.scrollY || window.pageYOffset;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${this.savedScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  }
+
+  unlockScroll() {
+    const y = this.savedScrollY || 0;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, y);
+    this.savedScrollY = 0;
+  }
+
   navigate(direction) {
     const newIndex = this.currentIndex + direction;
     if (newIndex >= 0 && newIndex < portfolioData.length) {
@@ -196,10 +217,11 @@ export class ModalPortfolio {
       if (wasActive) {
         this.animateContentChange(modalBody, modalContent, item, language);
       } else {
+        // Lock scroll BEFORE adding active class
+        this.lockScroll();
         const content = this.renderModalContent(item, language);
         modalBody.innerHTML = content;
         this.element.classList.add('active');
-        document.body.style.overflow = 'hidden';
         this.attachCarouselListeners();
       }
 
@@ -268,7 +290,8 @@ export class ModalPortfolio {
     }
 
     this.element.classList.remove('active');
-    document.body.style.overflow = '';
+    // Unlock scroll when closing
+    this.unlockScroll();
     // Navigate back to portfolio page without slug
     const { language } = stateManager.getState();
     const newPath = router.buildPath('portfolio', language);
