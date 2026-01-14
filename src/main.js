@@ -59,3 +59,31 @@ class App {
 }
 
 new App();
+
+// Mobile quadrant height calculation using visualViewport API
+// Ensures consistent 40% viewport height across Safari iOS, Chrome Android, Samsung Internet
+function setQuadHeights() {
+  // Only run on mobile devices
+  if (window.innerWidth > 768) return;
+
+  // Use visualViewport.height when available (more accurate for mobile browsers)
+  const vv = window.visualViewport;
+  const viewportH = vv ? vv.height : window.innerHeight;
+  const quad40 = Math.round(viewportH * 0.4);
+
+  // Set CSS custom property for use in quadrants.css
+  document.documentElement.style.setProperty("--quad40", quad40 + "px");
+}
+
+// Run on load
+setQuadHeights();
+
+// Update on resize and orientation change
+window.addEventListener("resize", setQuadHeights);
+window.addEventListener("orientationchange", setQuadHeights);
+
+// Listen to visualViewport events for mobile browser UI changes (address bar show/hide)
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", setQuadHeights);
+  window.visualViewport.addEventListener("scroll", setQuadHeights);
+}

@@ -63,6 +63,11 @@ html[lang="ko"] body {
   font-family: 'Pretendard', 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
+/* Force buttons, inputs, and form elements to inherit font */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
 /* When expanded, body becomes the scroll container */
 body.stateExpanding {
   position: static !important;

@@ -7,6 +7,7 @@
   /* Safari fix: Elevate above all background elements (quadrants at z-150, close at z-200) */
   z-index: 9999;
   pointer-events: none; /* Allow clicks through wrapper to panels */
+  font-family: inherit; /* Ensure Poppins/Pretendard is inherited */
 }
 
 /* Tab Panel - Contains both buttons and content as unified element */

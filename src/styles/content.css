@@ -165,9 +165,10 @@
   background: var(--color-menu-white);
 }
 
-/* Remove top margin on About page to connect with Our Space */
+/* Remove top margin and padding on About page to connect with Our Space */
 .page-about .cta-section {
   margin-top: 0;
+  padding-top: 0;
 }
 
 /* Add bottom margin to Portfolio and Services content */
@@ -946,6 +947,11 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: flex;
   gap: 10px;
   z-index: 10;
+  /* Add pill background for visibility on white backgrounds */
+  background: rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .modal-carousel-indicator {
@@ -1135,11 +1141,14 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 10;
+  z-index: 2;
   opacity: 0;
   transition: all 0.3s ease;
   color: #333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .quote-carousel-prev:hover,
@@ -1169,10 +1178,20 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: block;
 }
 
+/* Phones and tablets: no hover, so always show controls */
+@media (hover: none), (pointer: coarse) {
+  .quote-carousel-prev,
+  .quote-carousel-next {
+    opacity: 1;
+  }
+}
+
 .quote-carousel-container {
   overflow: hidden;
   position: relative;
   width: 100%;
+  /* Establish stacking context */
+  z-index: 1;
 }
 
 .carousel-track {
@@ -1181,6 +1200,8 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   /* Safari-specific: Force integer pixel positioning */
   will-change: transform;
   backface-visibility: hidden;
+  position: relative;
+  z-index: 1;
   -webkit-backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
 }
@@ -1507,7 +1528,7 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
   display: none;
   width: 100%;
   overflow: hidden;
-  padding: 40px 0;
+  padding: 40px 0 0 0;
 }
 
 .space-marquee-track {
@@ -1552,6 +1573,11 @@ body.portfolioSelected .language-toggle.scrolled .lang-separator {
 
   .space-marquee {
     display: block;
+  }
+
+  /* Remove all padding on About page to connect to footer */
+  .page-about .space-marquee {
+    padding: 0;
   }
 }
 

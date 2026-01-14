@@ -60,20 +60,41 @@ export class QuoteCarousel {
       this.startAutoScroll();
     });
 
-    // Navigation button click handlers with explicit event prevention for Safari
-    this.prevBtn.addEventListener('click', (e) => {
+    // Navigation button handlers using Pointer Events for consistent mobile/desktop behavior
+    const onPrev = (e) => {
+      // Only handle primary pointer (no right click, no multi-touch chaos)
+      if (e.pointerType && e.isPrimary === false) return;
+
       e.preventDefault();
       e.stopPropagation();
       this.moveToSlide(this.currentIndex - 1);
-    });
+    };
 
-    this.nextBtn.addEventListener('click', (e) => {
+    const onNext = (e) => {
+      // Only handle primary pointer (no right click, no multi-touch chaos)
+      if (e.pointerType && e.isPrimary === false) return;
+
       e.preventDefault();
       e.stopPropagation();
       this.moveToSlide(this.currentIndex + 1);
-    });
+    };
 
-    // Add hover listeners for Safari compatibility
+    // Prefer Pointer Events for unified touch/mouse/pen handling
+    if (window.PointerEvent) {
+      // pointerup feels like "tap", works consistently across devices
+      this.prevBtn.addEventListener('pointerup', onPrev, { passive: false });
+      this.nextBtn.addEventListener('pointerup', onNext, { passive: false });
+
+      // Prevent ghost clicks in iOS by swallowing click events
+      this.prevBtn.addEventListener('click', (e) => e.preventDefault());
+      this.nextBtn.addEventListener('click', (e) => e.preventDefault());
+    } else {
+      // Fallback for older browsers without Pointer Events
+      this.prevBtn.addEventListener('click', onPrev);
+      this.nextBtn.addEventListener('click', onNext);
+    }
+
+    // Add hover listeners for visual feedback
     this.prevBtn.addEventListener('mouseenter', () => {
       this.prevBtn.classList.add('hovered');
     });
@@ -205,13 +226,21 @@ export class QuoteCarousel {
     this.currentIndex = index;
     this.applyTransform();
 
-    // Listen for transition end to reset flag
-    const handleTransitionEnd = () => {
+    // Guaranteed unlock that handles all edge cases
+    const unlock = () => {
       this.isTransitioning = false;
-      this.track.removeEventListener('transitionend', handleTransitionEnd);
+      clearTimeout(this._transitionFallback);
     };
 
-    this.track.addEventListener('transitionend', handleTransitionEnd);
+    // Fallback unlock even if transitionend never fires (700ms = 500ms transition + 200ms buffer)
+    clearTimeout(this._transitionFallback);
+    this._transitionFallback = setTimeout(unlock, 700);
+
+    // Use once: true so handlers cannot stack if something goes wrong
+    this.track.addEventListener('transitionend', unlock, { once: true });
+    this.track.addEventListener('transitioncancel', unlock, { once: true });
+    // iOS Safari sometimes prefers the prefixed event
+    this.track.addEventListener('webkitTransitionEnd', unlock, { once: true });
   }
 
   autoAdvance() {

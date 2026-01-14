@@ -70,29 +70,60 @@ export class TeamProfiles {
     // Add tap to toggle on mobile (only one open at a time)
     const isMobile = () => window.innerWidth <= 768;
 
-    const handleToggle = (e) => {
+    // Track touch movement to distinguish tap from scroll
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let isTouchMoving = false;
+
+    const handleTouchStart = (e) => {
       if (isMobile()) {
-        e.preventDefault();
-        e.stopPropagation();
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        isTouchMoving = false;
+      }
+    };
 
-        const isCurrentlyActive = card.classList.contains('mobile-active');
+    const handleTouchMove = (e) => {
+      if (isMobile()) {
+        const touchMoveY = e.touches[0].clientY;
+        const moveDistance = Math.abs(touchMoveY - touchStartY);
 
-        // Close all other profiles first
-        const allCards = this.element.querySelectorAll('.team-member');
-        allCards.forEach(otherCard => {
-          otherCard.classList.remove('mobile-active');
-        });
-
-        // If this card wasn't active, open it (accordion behavior)
-        if (!isCurrentlyActive) {
-          card.classList.add('mobile-active');
+        // If moved more than 5px, consider it scrolling (stricter threshold)
+        if (moveDistance > 5) {
+          isTouchMoving = true;
         }
       }
     };
 
-    // Use both touch and click events for better mobile compatibility
-    card.addEventListener('touchend', handleToggle, { passive: false });
-    card.addEventListener('click', handleToggle);
+    const handleTouchEnd = (e) => {
+      if (isMobile()) {
+        const touchDuration = Date.now() - touchStartTime;
+
+        // Very strict: Only trigger if it's a quick tap (< 200ms) with minimal movement
+        if (!isTouchMoving && touchDuration < 200) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const isCurrentlyActive = card.classList.contains('mobile-active');
+
+          // Close all other profiles first
+          const allCards = this.element.querySelectorAll('.team-member');
+          allCards.forEach(otherCard => {
+            otherCard.classList.remove('mobile-active');
+          });
+
+          // If this card wasn't active, open it (accordion behavior)
+          if (!isCurrentlyActive) {
+            card.classList.add('mobile-active');
+          }
+        }
+      }
+    };
+
+    // Touch event listeners for mobile
+    card.addEventListener('touchstart', handleTouchStart, { passive: true });
+    card.addEventListener('touchmove', handleTouchMove, { passive: true });
+    card.addEventListener('touchend', handleTouchEnd, { passive: false });
 
     return card;
   }

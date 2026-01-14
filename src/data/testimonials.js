@@ -62,11 +62,11 @@ export const testimonials = [
   {
     quote: {
       ko: '세심한 제안과 열정적 지원으로, 프로젝트 내내 든든한 파트너십을 느낄 수 있었습니다.',
-      en: 'Detail까지 챙겨주시는 세심함과 Customized Solution을 제시해 주시는 완벽함.',
+      en: 'Meticulous attention to detail and customized solutions. Perfect partnership.',
     },
     author: {
       ko: 'Innocean 이유진 매니저',
-      en: 'SK Chemical 강양리 대리',
+      en: 'SK Chemical Kang Yang-ri',
     },
   },
   {

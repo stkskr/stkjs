@@ -178,10 +178,11 @@
    ======================================== */
 
 @media (max-width: 768px) {
-  /* EXPANDED STATE: Selected quad takes 40dvh */
+  /* EXPANDED STATE: Selected quad takes 40% of viewport */
   .quadrant.selected {
     width: 100% !important;
-    height: 40dvh !important;
+    /* Use JS-calculated --quad40 variable for consistent cross-browser heights, fallback to svh */
+    height: var(--quad40, 40svh) !important;
     top: 0 !important;
     left: 0 !important;
   }
@@ -192,9 +193,10 @@
   .servicesSelected .white-sub,
   .portfolioSelected .white-sub {
     left: 0 !important;
-    top: 40dvh !important;
+    /* Use JS-calculated --quad40 variable for consistent cross-browser heights, fallback to svh */
+    top: var(--quad40, 40svh) !important;
     width: 100% !important;
-    height: 40dvh !important;
+    height: var(--quad40, 40svh) !important;
   }
 
   /* Adjust sub-quadrant text size */

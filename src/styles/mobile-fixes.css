@@ -92,7 +92,8 @@
   .cta-section {
     padding-left: 40px !important;
     padding-right: 40px !important;
-    padding-bottom: 100px !important;
+    /* Extra padding for Chrome/Samsung bottom UI bars + safe area */
+    padding-bottom: calc(200px + env(safe-area-inset-bottom)) !important;
   }
 
   /* Testimonials section: edge-to-edge with no padding */
@@ -154,11 +155,6 @@
   .sub-quadrant {
     max-height: 40dvh !important;
     overflow: hidden !important;
-  }
-
-  /* Selected quadrants: Use dvh */
-  .quadrant.selected {
-    height: 40dvh !important;
   }
 
   /* Modal content: Adjust for mobile address bar and ensure proper scrolling */
@@ -227,49 +223,60 @@
     border-left: 1px solid #eee !important;
   }
 
-  /* Modal carousel: Responsive sizing for mobile */
+  /* Modal carousel: Let active image determine height on mobile */
+
+  /* Kill the desktop spacer */
+  .modal-carousel-container::before {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Let the container size naturally */
   .modal-carousel-container {
     margin-bottom: 15px !important;
     background: transparent !important;
-    position: relative !important;
-    /* Set consistent height to prevent jerky transitions */
-    height: 40vh !important;
-    min-height: 250px !important;
-    max-height: 400px !important;
+    overflow: visible !important;
+    height: auto !important;
   }
 
-  .modal-carousel-container::before {
-    display: none !important;
-  }
-
+  /* Stop absolutely filling a fake height */
   .modal-carousel {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    position: relative !important;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
   }
 
+  /* Only active slide participates in layout */
   .modal-carousel-item {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: none !important;
+    height: auto !important;
   }
 
   .modal-carousel-item.active {
-    position: absolute !important;
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
   }
 
+  /* Transitioning slides can overlay without affecting height */
+  .modal-carousel-item.exit-next,
+  .modal-carousel-item.exit-prev,
+  .modal-carousel-item.enter-next,
+  .modal-carousel-item.enter-prev {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Make images fill width, cap height, and remove desktop min-height */
   .modal-carousel-item img {
-    max-height: 100% !important;
-    max-width: 100% !important;
-    width: auto !important;
+    width: 100% !important;
     height: auto !important;
+    max-height: 60vh !important;
+    min-height: 0 !important;
+    max-width: 100% !important;
     object-fit: contain !important;
     display: block !important;
   }
@@ -277,21 +284,20 @@
   /* Also fix single image container */
   .modal-image-container {
     margin-bottom: 15px !important;
-    position: relative !important;
-    /* Match carousel height for consistency */
-    height: 40vh !important;
-    min-height: 250px !important;
-    max-height: 400px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .modal-image-container::before {
+    display: none !important;
+    content: none !important;
   }
 
   .modal-image-container img {
-    max-height: 100% !important;
-    max-width: 100% !important;
-    width: auto !important;
+    width: 100% !important;
     height: auto !important;
+    max-height: 60vh !important;
+    min-height: 0 !important;
     object-fit: contain !important;
     display: block !important;
   }
@@ -417,6 +423,24 @@
   /* Modal info item: Full width */
   .modal-info-item {
     min-width: 0 !important;
+  }
+
+  /* Modal meta: Stack items on separate lines, keep label/value together */
+  .modal-meta {
+    flex-direction: column !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+    padding-top: 20px !important;
+  }
+
+  .modal-meta-item {
+    flex-direction: row !important;
+    gap: 6px !important;
+    align-items: baseline !important;
+  }
+
+  .modal-meta-label {
+    font-size: 12px !important;
   }
 
   /* Video modal: Reduce padding */

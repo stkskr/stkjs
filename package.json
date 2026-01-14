@@ -6,7 +6,8 @@
     "dev": "npm run generate:manifest && vite",
     "build": "npm run generate:manifest && vite build",
     "preview": "vite preview",
-    "generate:manifest": "node scripts/generate-image-manifest.js"
+    "generate:manifest": "node scripts/generate-image-manifest.js",
+    "dev": "vite --host 0.0.0.0"
   },
   "devDependencies": {
     "vite": "^5.0.8",
